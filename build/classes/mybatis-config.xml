@@ -11,7 +11,7 @@
 		<setting name="lazyLoadingEnabled" value="true" />
 		<setting name="aggressiveLazyLoading" value="false" />
 	</settings>
-	<typeHandlers>
+	<!-- <typeHandlers>
 		<typeHandler handler="com.project.tools.BlobTypeHandler" />
-	</typeHandlers>
+	</typeHandlers> -->
 </configuration>
