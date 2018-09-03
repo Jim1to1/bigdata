@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+ "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.bigdata.dao.TaskManagementMapper">
+
+	<resultMap type="com.bigdata.beans.TaskManagement" id="taskManagementMapper">
+		<id column="taskId" property="taskId" />
+		<result column="devIP" property="devIP" />
+		<result column="status" property="status" />
+		<result column="describe" property="describe" />
+		<result column="addTime" property="addTime" />
+		<result column="ownerId" property="ownerId" />
+	</resultMap>
+
+	<sql id="columns">
+		(devIP, status, describe, addTime, ownerId)
+	</sql>
+	
+	<!-- 通过 taskId 获取 TaskManagement 对象信息: public TaskManagementMapper getTaskManagementMapperById(Integer taskId); -->
+	
+	<!-- 通过 taskManagementMapper 属性信息筛选 <TaskManagementMapper> 表中信息: public TaskManagementMapper getTaskManagementMapperByEntity(TaskManagementMapper taskManagementMapper); -->
+	
+	<!-- 添加 TaskManagementMapper 对象信息并返回主键值: public int addTaskManagementMapper(TaskManagementMapper taskManagement); -->
+	
+	<!-- 通过 taskId 删除指定 TaskManagementMapper 对象信息: public void deleteTaskManagementById(Integer taskId); -->
+	
+	<!-- 获取所有 TaskManagementMapper 对象信息: public List<TaskManagement> getAllTaskManagement(); -->
+	
+	<!-- 通过 TaskManagementMapper 属性模糊查询 <TaskManagementMapper> 表中信息: public List<TaskManagement> getTaskManagementByEntityForLike(TaskManagement taskManagement); -->
+	
+	<!-- 根据 TaskManagementMapper 对象属性更新 <TaskManagementMapper> 表中信息: public void updateTaskManagement(TaskManagement taskManagement); -->
+
+</mapper>

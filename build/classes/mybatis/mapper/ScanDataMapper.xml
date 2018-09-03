@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+ "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.bigdata.dao.ScanDataMapper">
+
+	<resultMap type="com.bigdata.beans.ScanData" id="scanDataMapper">
+		<id column="scanId" property="scanId" />
+		<result column="devInfo" property="devInfo" />
+		<result column="vulnerInfo" property="vulnerInfo" />
+		<result column="ouccrTime" property="ouccrTime" />
+		<result column="newStatus" property="newStatus" />
+		<result column="taskId" property="taskId" />
+	</resultMap>
+
+	<sql id="columns">
+		(devInfo, vulnerInfo, ouccrTime, newStatus, taskId)
+	</sql>
+	
+	<!-- 通过 scanId 获取 <ScanData> 表中 ScanData 对象信息: public ScanData getScanDataById(Integer scanId); -->
+	
+	<!-- 通过 ScanData 属性获取 <ScanData> 表中 ScanData 对象信息: public ScanData getScanDataByEntity(ScanData scanData); -->
+	
+	<!-- 向 <ScanData> 表中添加 ScanData 对象信息并返回主键: public int addScanData(ScanData scanData); -->
+	
+	<!-- 通过 scanId 删除 ScanData 对象信息: public void deleteScanDataById(Integer scanId); -->
+
+	<!-- 获取 <ScanData> 表中所有 ScanData 信息: public List<ScanData> getAllScanData(); -->
+	
+	<!-- 通过 scanData 对象信息模糊查询 <ScanData> 表中信息: public List<ScanData> getScanDataByEntityForLike(ScanData scanData); -->
+	
+	<!-- 通过 ScanData 对象属性更新 <ScanData> 表中信息: public void updateScanDataByEntity(ScanData scanData); -->
+
+</mapper>

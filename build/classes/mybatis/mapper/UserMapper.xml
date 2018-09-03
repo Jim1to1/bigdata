@@ -6,12 +6,25 @@
 
 	<resultMap type="com.bigdata.beans.User" id="">
 		<id column="userId" property="userId" />
-		<result column="" property="" />
+		<result column="userName" property="userName" />
 	</resultMap>
 
-	<sql id="">
-		(courseNumber, courseName, coursePeriod, courseCredits,
-		courseDepartment, courseAttribute, courseProperty)
+	<sql id="columns">
+		(userName, passWord)
 	</sql>
+	
+	<!-- 通过用户 id 号获取指定用户: public User getUserById(Integer userId); -->
+	
+	<!-- 通过用户名密码获取指定用户(登陆用): public User getUserByUserNameAndPsw(String userName, String passWord); -->
+	
+	<!-- 通过指定 id 删除用户: public void deleteUserById(Integer id); -->
+	
+	<!-- 添加用户并返回其主键值: public int addUser(User user); -->
+	
+	<!-- 通过用户对象属性更新用户: public void updateUser(User user); -->
+	
+	<!-- 获取所有用户: public List<User> getAllUser(); -->
+	
+	<!-- 通过用户属性模糊查询用户列表: public List<User> getUserByPropertisForLike(User user); -->
 
 </mapper>

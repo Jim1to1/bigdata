@@ -1,5 +1,7 @@
 package com.bigdata.beans;
 
+import java.util.List;
+
 /**
  * 任务管理表
  * @author yangyang
@@ -13,22 +15,22 @@ public class TaskManagement {
 	private String describe;	// 扫描任务描述
 	private String addTime;		// 任务创建时间
 	
-	// 关联属性
-	private TaskOwner taskOwner;// 关联任务隶属关系用户
+	// 关联属性, 关联多个 ScanData 对象
+	private List<ScanData> scanDataList;
 
 	public TaskManagement() {
 		super();
 	}
 
 	public TaskManagement(Integer taskId, String devIP, Integer status, String describe, String addTime,
-			TaskOwner taskOwner) {
+			List<ScanData> scanDataList) {
 		super();
 		this.taskId = taskId;
 		this.devIP = devIP;
 		this.status = status;
 		this.describe = describe;
 		this.addTime = addTime;
-		this.taskOwner = taskOwner;
+		this.scanDataList = scanDataList;
 	}
 
 	public Integer getTaskId() {
@@ -71,18 +73,18 @@ public class TaskManagement {
 		this.addTime = addTime;
 	}
 
-	public TaskOwner getTaskOwner() {
-		return taskOwner;
+	public List<ScanData> getScanDataList() {
+		return scanDataList;
 	}
 
-	public void setTaskOwner(TaskOwner taskOwner) {
-		this.taskOwner = taskOwner;
+	public void setScanDataList(List<ScanData> scanDataList) {
+		this.scanDataList = scanDataList;
 	}
 
 	@Override
 	public String toString() {
 		return "TaskManagement [taskId=" + taskId + ", devIP=" + devIP + ", status=" + status + ", describe=" + describe
-				+ ", addTime=" + addTime + ", taskOwner=" + taskOwner + "]";
+				+ ", addTime=" + addTime + ", scanDataList=" + scanDataList + "]";
 	}
-	
+
 }

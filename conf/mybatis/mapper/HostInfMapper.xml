@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+ "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.bigdata.dao.HostInfMapper">
+
+	<resultMap type="com.bigdata.beans.HostInf" id="hostInfMapper">
+		<id column="hostId" property="hostId" />
+		<result column="devIP" property="devIP" />
+		<result column="macAddress" property="macAddress" />
+		<result column="indicator" property="indicator" />
+		<result column="devType" property="devType" />
+		<result column="msg" property="msg" />
+	</resultMap>
+
+	<sql id="columns">
+		(devIP, macAddress, indicator, devType, msg)
+	</sql>
+	
+	<!-- 通过 hostId 获取 HostInf 对象: public HostInf getHostInfById(Integer hostId); -->
+	<select id="getHostInfById" resultType="com.bigdata.beans.HostInf">
+		
+		select * from HostInf
+		<where>
+			hostId = #{hostId}
+		</where>
+		
+	</select>
+	
+	<!-- 通过 hostInf 对象实体属性筛选获取 HostInf 对象实体: public HostInf getHostInfByEntity(HostInf hostInf); -->
+	<select id="getHostInfByEntity" resultType="com.bigdata.beans.HostInf">
+		
+		select * from HostInf
+		<where>
+			1 = 1
+			<if test="hostId != null">
+				and hostId = #{hostId}
+			</if>
+			<if test="devIP != null">
+				and devIP = #{devIP}
+			</if>
+			<if test="macAddress != null">
+				and hostId = #{hostId}
+			</if>
+			<if test="indicator != null">
+				and hostId = #{hostId}
+			</if>
+			<if test="devType != null">
+				and hostId = #{hostId}
+			</if>
+			<if test="msg != null">
+				and hostId = #{hostId}
+			</if>
+		</where>
+		
+	</select>
+	
+	<!-- 添加 HostInf 信息: public int addHostInf(HostInf hostInf); -->
+	<insert id="addHostInf">
+		insert into HostInf
+		<include refid="columns" />
+		values
+		(#{devIP}, #{macAddress}, #{indicator}, #{devType}, #{msg})
+	</insert>
+	
+	<!-- 通过 hostId 删除 HostInf 对象信息: public void deleteHostInfById(Integer hostId); -->
+	<delete id="deleteHostInfById">
+		delete from HostInf where hostId = #{hostId}
+	</delete>
+	
+	<!-- 获取 <HostInf> 表中所有 HostInf 信息: public List<HostInf> getAllHostInf(); -->
+	<select id="getAllHostInf">
+		
+		select * from HostInf
+		
+	</select>
+	
+	<!-- 通过 HostInf 对象属性模糊查询 <HostInf> 表中对象信息: public List<HostInf> getHostInfListByEntityForLike(HostInf hostInf); -->
+	<select id="getHostInfListByEntityForLike" resultType="com.bigdata.beans.HostInf">
+	
+		select * from HostInf
+		<where>
+			1 = 1
+			<if test="hostId != null">
+				and hostId = #{hostId}
+			</if>
+			<if test="devIP != null">
+				and devIP like CONCAT(CONCAT('%', #{devIP}, '%'))
+			</if>
+			<if test="macAddress != null">
+				and macAddress like CONCAT(CONCAT('%', #{macAddress}, '%'))
+			</if>
+			<if test="indicator != null">
+				and indicator like CONCAT(CONCAT('%', #{indicator}, '%'))
+			</if>
+			<if test="devType != null">
+				and devType like CONCAT(CONCAT('%', #{devType}, '%'))
+			</if>
+			<if test="macAddress != null">
+				and msg like CONCAT(CONCAT('%', #{msg}, '%'))
+			</if>
+		</where>
+	
+	</select>
+	
+	<!-- 通过 hostInf 对象属性更新 <HostInf> 表中信息 (hostInf 对象中需带有 hostId, 否则更新无效): public void updateHostInfByEntity(HostInf hostInf); -->
+	<update id="updateHostInfByEntity">
+		update HostInf
+		<trim prefix="set" suffixOverrides=",">
+			<if test="devIP != null">
+				devIP = #{devIP},
+			</if>
+			<if test="macAddress != null">
+				macAddress = #{macAddress},
+			</if>
+			<if test="indicator != null">
+				indicator = #{indicator},
+			</if>
+			<if test="devType != null">
+				devType = #{devType},
+			</if>
+			<if test="msg != null">
+				msg = #{msg},
+			</if>
+	 	</trim>
+		<where>
+			hostId = #{hostId}
+		</where>
+	</update>
+
+</mapper>

@@ -36,7 +36,7 @@ public interface UserMapper {
 	 * 添加用户并返回其主键值
 	 * @param user
 	 */
-	public Integer addUser(User user);
+	public int addUser(User user);
 	
 	/**
 	 * 通过用户对象属性更新用户

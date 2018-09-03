@@ -5,7 +5,7 @@ package com.bigdata.beans;
  * @author yangyang
  *
  */
-public class IndustrialProtocal {
+public class IndustrialProtocol {
 
 	private Integer protocolId;		// 工业协议 id 号
 	private String protocolName;	// 监测到的协议名称
@@ -14,11 +14,11 @@ public class IndustrialProtocal {
 	private String srcIp;			// 协议包的源ip
 	private String protocolInfo;	// 协议具体数据信息
 	
-	public IndustrialProtocal() {
+	public IndustrialProtocol() {
 		super();
 	}
 
-	public IndustrialProtocal(Integer protocolId, String protocolName, String recepTime, String destIp, String srcIp,
+	public IndustrialProtocol(Integer protocolId, String protocolName, String recepTime, String destIp, String srcIp,
 			String protocolInfo) {
 		super();
 		this.protocolId = protocolId;
@@ -79,8 +79,8 @@ public class IndustrialProtocal {
 
 	@Override
 	public String toString() {
-		return "IndustrialProtocal [protocolId=" + protocolId + ", protocolName=" + protocolName + ", recepTime="
+		return "IndustrialProtocol [protocolId=" + protocolId + ", protocolName=" + protocolName + ", recepTime="
 				+ recepTime + ", destIp=" + destIp + ", srcIp=" + srcIp + ", protocolInfo=" + protocolInfo + "]";
 	}
-	
+
 }

@@ -13,22 +13,17 @@ public class ScanData {
 	private String ouccrTime;	// 扫描完成时间
 	private String newStatus;	// 扫描状态。此数据应该为2
 	
-	// 关联属性
-	private TaskOwner taskOwner;
-
 	public ScanData() {
 		super();
 	}
 
-	public ScanData(Integer scanId, String devInfo, String vulnerInfo, String ouccrTime, String newStatus,
-			TaskOwner taskOwner) {
+	public ScanData(Integer scanId, String devInfo, String vulnerInfo, String ouccrTime, String newStatus) {
 		super();
 		this.scanId = scanId;
 		this.devInfo = devInfo;
 		this.vulnerInfo = vulnerInfo;
 		this.ouccrTime = ouccrTime;
 		this.newStatus = newStatus;
-		this.taskOwner = taskOwner;
 	}
 
 	public Integer getScanId() {
@@ -71,18 +66,10 @@ public class ScanData {
 		this.newStatus = newStatus;
 	}
 
-	public TaskOwner getTaskOwner() {
-		return taskOwner;
-	}
-
-	public void setTaskOwner(TaskOwner taskOwner) {
-		this.taskOwner = taskOwner;
-	}
-
 	@Override
 	public String toString() {
 		return "ScanData [scanId=" + scanId + ", devInfo=" + devInfo + ", vulnerInfo=" + vulnerInfo + ", ouccrTime="
-				+ ouccrTime + ", newStatus=" + newStatus + ", taskOwner=" + taskOwner + "]";
+				+ ouccrTime + ", newStatus=" + newStatus + "]";
 	}
 	
 }

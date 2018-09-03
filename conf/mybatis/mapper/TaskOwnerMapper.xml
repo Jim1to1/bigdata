@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+ "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.bigdata.dao.TaskOwnerMapper">
+
+	<resultMap type="com.bigdata.beans.TaskOwner" id="taskOwnerMapper">
+		<id column="taskOwnerId" property="taskOwnerId" />
+		<result column="macAddress" property="macAddress" />
+		<result column="configversion" property="configversion" />
+	</resultMap>
+
+	<sql id="columns">
+		(macAddress, configversion)
+	</sql>
+	
+	<!-- 通过 taskOwnerId 获取 TaskOwner 对象信息: public TaskOwner getTaskOwnerById(Integer taskOwnerId); -->
+	
+	<!-- 通过 TaskOwner 对象属性获取 TaskOwner 对象信息: public TaskOwner getTaskOwnerByEntity(TaskOwner taskOwner); -->
+	
+	<!-- 添加 TaskOwner 对象到 <TaskOwner> 表中, 并返回主键值: public int addTaskOwner(TaskOwner taskOwner); -->
+	
+	<!-- 通过 taskOwnerId 删除指定 TaskOwner 对象: public void deleteTaskOwnerById(Integer taskOwnerId); -->
+	
+	<!-- 获取所有 TaskOwner 对象信息: public List<TaskOwner> getAllTaskOwner(); -->
+	
+	<!-- 通过 TaskOwner 对象属性查询 <TaskOwner> 表中信息, 并返回列表: public List<TaskOwner> getTaskOwnerByEntityForLike(TaskOwner taskOwner); -->
+	
+	<!-- 更新 <TaskOwner> 表中信息: public void updateTaskOwner(TaskOwner taskOwner); -->
+
+</mapper>

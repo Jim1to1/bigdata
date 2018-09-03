@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+ "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.bigdata.dao.IndustrialProtocolMapper">
+
+	<resultMap type="com.bigdata.beans.IndustrialProtocol" id="industrialProtocolMapper">
+		<id column="protocolId" property="protocolId" />
+		<result column="protocolName" property="protocolName" />
+		<result column="recepTime" property="recepTime" />
+		<result column="destIp" property="destIp" />
+		<result column="srcIp" property="srcIp" />
+		<result column="protocolInfo" property="protocolInfo" />
+	</resultMap>
+
+	<sql id="columns">
+		(protocolName, recepTime, destIp, srcIp, protocolInfo)
+	</sql>
+	
+	<!-- 通过 protocolId 获取对应 IndustrialProtocol 对象信息: public IndustrialProtocol getIndustrialProtocolById(Integer protocolId); -->
+	
+	<!-- 通过 IndustrialProtocol 对象属性筛选信息: public IndustrialProtocol getIndustrialProtocolByEntity(IndustrialProtocol industrialProtocol); -->
+	
+	<!-- 添加 IndustrialProtocol 对象信息并返回主键值: public int addIndustrialProtocol(IndustrialProtocol industrialProtocol); -->
+	
+	<!-- 通过 protocolId 删除指定 IndustrialProtocol 对象: public void deleteIndustrialProtocolById(Integer protocolId); -->
+	
+	<!-- 获取全部 <IndustrialProtocol> 表中信息: public List<IndustrialProtocol> getAllIndustrialProtocol(); -->
+	
+	<!-- 通过 IndustrialProtocol 对象属性模糊查询 IndustrialProtocol 列表: public List<IndustrialProtocol> getIndustrialProtocolByEntityForLike(IndustrialProtocol industrialProtocol); -->
+	
+	<!-- 通过 IndustrialProtocol 对象属性更新 <IndustrialProtocol> 表中信息: public void updateIndustrialProtocol(IndustrialProtocol industrialProtocol); -->
+
+</mapper>
