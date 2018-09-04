@@ -19,17 +19,14 @@
 	
 	<!-- 通过 hostId 获取 HostInf 对象: public HostInf getHostInfById(Integer hostId); -->
 	<select id="getHostInfById" resultType="com.bigdata.beans.HostInf">
-		
 		select * from HostInf
 		<where>
 			hostId = #{hostId}
 		</where>
-		
 	</select>
 	
 	<!-- 通过 hostInf 对象实体属性筛选获取 HostInf 对象实体: public HostInf getHostInfByEntity(HostInf hostInf); -->
 	<select id="getHostInfByEntity" resultType="com.bigdata.beans.HostInf">
-		
 		select * from HostInf
 		<where>
 			1 = 1
@@ -52,7 +49,6 @@
 				and hostId = #{hostId}
 			</if>
 		</where>
-		
 	</select>
 	
 	<!-- 添加 HostInf 信息: public int addHostInf(HostInf hostInf); -->
@@ -69,15 +65,12 @@
 	</delete>
 	
 	<!-- 获取 <HostInf> 表中所有 HostInf 信息: public List<HostInf> getAllHostInf(); -->
-	<select id="getAllHostInf">
-		
+	<select id="getAllHostInf" resultType="com.bigdata.beans.HostInf">
 		select * from HostInf
-		
 	</select>
 	
 	<!-- 通过 HostInf 对象属性模糊查询 <HostInf> 表中对象信息: public List<HostInf> getHostInfListByEntityForLike(HostInf hostInf); -->
 	<select id="getHostInfListByEntityForLike" resultType="com.bigdata.beans.HostInf">
-	
 		select * from HostInf
 		<where>
 			1 = 1
@@ -100,7 +93,6 @@
 				and msg like CONCAT(CONCAT('%', #{msg}, '%'))
 			</if>
 		</where>
-	
 	</select>
 	
 	<!-- 通过 hostInf 对象属性更新 <HostInf> 表中信息 (hostInf 对象中需带有 hostId, 否则更新无效): public void updateHostInfByEntity(HostInf hostInf); -->

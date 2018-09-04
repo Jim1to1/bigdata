@@ -10,7 +10,16 @@
 		<result column="status" property="status" />
 		<result column="describe" property="describe" />
 		<result column="addTime" property="addTime" />
-		<result column="ownerId" property="ownerId" />
+				
+		<collection property="scanDataList" ofType="com.bigdata.beans.ScanData">
+			<!-- 定义这个集合中元素的封装规则 -->
+			<!-- column 对应数据库列名	property 对应 bean 属性名 -->
+			<id column="scanId" property="scanId" />
+			<result column="devInfo" property="devInfo" />
+			<result column="vulnerInfo" property="vulnerInfo" />
+			<result column="ouccrTime" property="ouccrTime" />
+			<result column="newStatus" property="newStatus" />
+		</collection>
 	</resultMap>
 
 	<sql id="columns">
@@ -18,17 +27,107 @@
 	</sql>
 	
 	<!-- 通过 taskId 获取 TaskManagement 对象信息: public TaskManagementMapper getTaskManagementMapperById(Integer taskId); -->
+	<select id="getTaskManagementMapperById" resultMap="taskManagementMapper">
+		select * from TaskManagement tm, ScanData sd
+		<where>
+			tm.taskId = sd.taskId
+			and tm.taskId = #{taskId}
+		</where>
+	</select>
 	
 	<!-- 通过 taskManagementMapper 属性信息筛选 <TaskManagementMapper> 表中信息: public TaskManagementMapper getTaskManagementMapperByEntity(TaskManagementMapper taskManagementMapper); -->
+	<select id="getTaskManagementMapperByEntity" resultMap="taskManagementMapper">
+		select * from TaskManagement tm, ScanData sd
+		<where>
+			tm.taskId = sd.taskId
+			<if test="taskId != null">
+				and tm.taskId = #{taskId}
+			</if>
+			<if test="devIP != null">
+				and devIP = #{devIP}
+			</if>
+			<if test="status != null">
+				and status = #{status}
+			</if>
+			<if test="describe != null">
+				and describe = #{describe}
+			</if>
+			<if test="addTime != null">
+				and addTime = #{addTime}
+			</if>
+		</where>
+	</select>
 	
-	<!-- 添加 TaskManagementMapper 对象信息并返回主键值: public int addTaskManagementMapper(TaskManagementMapper taskManagement); -->
+	<!-- 添加 TaskManagementMapper 对象信息并返回主键值: public int addTaskManagement(TaskManagement taskManagement); -->
+	<insert id="addTaskManagement">
+		insert into TaskManagement
+		<include refid="columns" />
+		values
+		(#{devIP}, #{status}, #{describe}, #{addTime}, #{ownerId})
+	</insert>
 	
 	<!-- 通过 taskId 删除指定 TaskManagementMapper 对象信息: public void deleteTaskManagementById(Integer taskId); -->
+	<delete id="deleteTaskManagementById">
+		delete from TaskManagement where taskId = #{taskId}
+	</delete>
 	
 	<!-- 获取所有 TaskManagementMapper 对象信息: public List<TaskManagement> getAllTaskManagement(); -->
+	<select id="getTaskManagementMapperByEntity" resultMap="taskManagementMapper">
+		select * from TaskManagement tm, ScanData sd
+		<where>
+			tm.taskId = sd.taskId
+		</where>
+	</select>
 	
 	<!-- 通过 TaskManagementMapper 属性模糊查询 <TaskManagementMapper> 表中信息: public List<TaskManagement> getTaskManagementByEntityForLike(TaskManagement taskManagement); -->
+	<select id="getTaskManagementMapperByEntity" resultMap="taskManagementMapper">
+		select * from TaskManagement tm, ScanData sd
+		<where>
+			tm.taskId = sd.taskId
+			<if test="taskId != null">
+				and tm.taskId = #{taskId}
+			</if>
+			<if test="devIP != null">
+				and devIP like CONCAT(CONCAT('%', #{devIP}, '%'))
+			</if>
+			<if test="status != null">
+				and status like CONCAT(CONCAT('%', #{status}, '%'))
+			</if>
+			<if test="describe != null">
+				and describe like CONCAT(CONCAT('%', #{describe}, '%'))
+			</if>
+			<if test="addTime != null">
+				and addTime like CONCAT(CONCAT('%', #{addTime}, '%'))
+			</if>
+			<if test="ownerId != null">
+				and ownerId like CONCAT(CONCAT('%', #{ownerId}, '%'))
+			</if>
+		</where>
+	</select>
 	
 	<!-- 根据 TaskManagementMapper 对象属性更新 <TaskManagementMapper> 表中信息: public void updateTaskManagement(TaskManagement taskManagement); -->
+	<update id="updateTaskManagement">
+		update TaskManagementMapper
+		<trim prefix="set" suffixOverrides=",">
+			<if test="devIP != null">
+				devIP = #{devIP},
+			</if>
+			<if test="status != null">
+				status = #{status},
+			</if>
+			<if test="describe != null">
+				describe = #{describe},
+			</if>
+			<if test="addTime != null">
+				addTime = #{addTime},
+			</if>
+			<if test="ownerId != null">
+				ownerId = #{ownerId},
+			</if>
+	 	</trim>
+		<where>
+			taskId = #{taskId}
+		</where>
+	</update>
 
 </mapper>

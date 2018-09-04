@@ -23,14 +23,14 @@ public interface TaskManagementMapper {
 	 * @param taskManagementMapper
 	 * @return
 	 */
-	public TaskManagementMapper getTaskManagementMapperByEntity(TaskManagementMapper taskManagementMapper);
+	public TaskManagementMapper getTaskManagementMapperByEntity(TaskManagement taskManagement);
 	
 	/**
 	 * 添加 TaskManagementMapper 对象信息并返回主键值
 	 * @param taskManagement
 	 * @return
 	 */
-	public int addTaskManagementMapper(TaskManagementMapper taskManagement);
+	public int addTaskManagement(TaskManagement taskManagement);
 	
 	/**
 	 * 通过 taskId 删除指定 TaskManagementMapper 对象信息
