@@ -1,8 +1,6 @@
 package com.bigdata.tools;
 
-import java.util.List;
-
-public class KeepAliveNode {
+public class SubNode {
 
 	private String param1;
 	private String param2;
@@ -14,16 +12,13 @@ public class KeepAliveNode {
 	private String param8;
 	private String param9;
 	private String param10;
-	private List<String> paramList1;
-	private List<String> paramList2;
 	
-	public KeepAliveNode() {
+	public SubNode() {
 		super();
 	}
 
-	public KeepAliveNode(String param1, String param2, String param3, String param4, String param5, String param6,
-			String param7, String param8, String param9, String param10, List<String> paramList1,
-			List<String> paramList2) {
+	public SubNode(String param1, String param2, String param3, String param4, String param5, String param6,
+			String param7, String param8, String param9, String param10) {
 		super();
 		this.param1 = param1;
 		this.param2 = param2;
@@ -35,8 +30,6 @@ public class KeepAliveNode {
 		this.param8 = param8;
 		this.param9 = param9;
 		this.param10 = param10;
-		this.paramList1 = paramList1;
-		this.paramList2 = paramList2;
 	}
 
 	public String getParam1() {
@@ -119,28 +112,11 @@ public class KeepAliveNode {
 		this.param10 = param10;
 	}
 
-	public List<String> getParamList1() {
-		return paramList1;
-	}
-
-	public void setParamList1(List<String> paramList1) {
-		this.paramList1 = paramList1;
-	}
-
-	public List<String> getParamList2() {
-		return paramList2;
-	}
-
-	public void setParamList2(List<String> paramList2) {
-		this.paramList2 = paramList2;
-	}
-
 	@Override
 	public String toString() {
-		return "KeepAliveNode [param1=" + param1 + ", param2=" + param2 + ", param3=" + param3 + ", param4=" + param4
+		return "SubNode [param1=" + param1 + ", param2=" + param2 + ", param3=" + param3 + ", param4=" + param4
 				+ ", param5=" + param5 + ", param6=" + param6 + ", param7=" + param7 + ", param8=" + param8
-				+ ", param9=" + param9 + ", param10=" + param10 + ", paramList1=" + paramList1 + ", paramList2="
-				+ paramList2 + "]";
+				+ ", param9=" + param9 + ", param10=" + param10 + "]";
 	}
-	
+
 }

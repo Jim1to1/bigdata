@@ -52,7 +52,7 @@
 	</select>
 	
 	<!-- 添加 HostInf 信息: public int addHostInf(HostInf hostInf); -->
-	<insert id="addHostInf">
+	<insert id="addHostInf" useGeneratedKeys="true" keyProperty="hostId" parameterType="com.bigdata.beans.HostInf">
 		insert into HostInf
 		<include refid="columns" />
 		values
