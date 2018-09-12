@@ -2,6 +2,7 @@ package com.bigdata.dao;
 
 import java.util.List;
 
+import org.apache.ibatis.annotations.Param;
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.stereotype.Repository;
 
@@ -24,7 +25,7 @@ public interface UserMapper {
 	 * @param passWord
 	 * @return
 	 */
-	public User getUserByUserNameAndPsw(String userName, String passWord);
+	public User getUserByUserNameAndPsw(@Param("userName")String userName, @Param("password")String password);
 	
 	/**
 	 * 通过指定 id 删除用户

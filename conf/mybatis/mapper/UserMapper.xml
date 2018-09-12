@@ -4,27 +4,81 @@
  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.bigdata.dao.UserMapper">
 
-	<resultMap type="com.bigdata.beans.User" id="">
+	<resultMap type="com.bigdata.beans.User" id="userMapper">
 		<id column="userId" property="userId" />
 		<result column="userName" property="userName" />
+		<result column="password" property="password"/>
 	</resultMap>
 
 	<sql id="columns">
-		(userName, passWord)
+		(userName, password)
 	</sql>
 	
 	<!-- 通过用户 id 号获取指定用户: public User getUserById(Integer userId); -->
-	
-	<!-- 通过用户名密码获取指定用户(登陆用): public User getUserByUserNameAndPsw(String userName, String passWord); -->
-	
+	<select id="getUserById" resultType="com.bigdata.beans.User">
+		select * from user
+		<where>
+			userId = #{userId}
+		</where>
+	</select>
+	<!-- 通过用户名密码获取指定用户(登陆用): public User getUserByUserNameAndPsw(String userName, String password); -->
+	<select id="getUserByUserNameAndPsw" resultType="com.bigdata.beans.User">
+		select * from user 
+		<where>
+			userName = #{userName} and password = #{password}
+		</where>
+
+	</select>
 	<!-- 通过指定 id 删除用户: public void deleteUserById(Integer id); -->
-	
+	<delete id="deleteUserById">
+		delete from user 
+		<where>
+	  		userId = #{userId}
+		</where>
+	</delete> 
 	<!-- 添加用户并返回其主键值: public int addUser(User user); -->
+	<insert id="addUser" useGeneratedKeys="true" keyProperty="userId" parameterType="com.bigdata.beans.User">
+		insert into user
+		<include refid="columns" />
+		values 
+		(#{userName}, #{password})
+	</insert>
 	
 	<!-- 通过用户对象属性更新用户: public void updateUser(User user); -->
+	<update id="updateUser">
+		update user
+		<trim prefix="set" suffixOverrides=",">
+			<if test="userName != null">
+				userName = #{userName},
+			</if>
+			<if test="password != null">
+				password = #{password}
+			</if>
+	 	</trim>
+		<where>
+			userId = #{userId}
+		</where>
+	</update>
 	
 	<!-- 获取所有用户: public List<User> getAllUser(); -->
+	<select id="getAllUser" resultType="com.bigdata.beans.User">
+		select * from user
+	</select>
 	
 	<!-- 通过用户属性模糊查询用户列表: public List<User> getUserByPropertisForLike(User user); -->
-
+	<select id="getUserByPropertisForLike" resultType="com.bigdata.beans.User">
+		select * from user
+		<where>
+			1 = 1
+			<if test="userId != null">
+				and userId like CONCAT(CONCAT('%', #{userId}, '%'))
+			</if>
+			<if test="userName != null">
+				and userName like CONCAT(CONCAT('%', #{userName}, '%'))
+			</if>
+			<if test="password != null">
+				and password like CONCAT(CONCAT('%', #{password}, '%'))
+			</if>
+		</where>
+	</select>
 </mapper>

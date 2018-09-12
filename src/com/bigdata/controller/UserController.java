@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+
 import com.bigdata.beans.User;
 import com.bigdata.service.UserService;
 
@@ -23,8 +24,8 @@ public class UserController {
 	 * @return
 	 */
 	@RequestMapping("/userLogin")
-	public String userLogin(@RequestParam("form-username") String userName, @RequestParam("form-password") String passWord, HttpSession session) {
-		User user = userService.getUserByUserNameAndPassWord(userName, passWord);
+	public String userLogin(HttpSession session, @RequestParam("form-username") String userName, @RequestParam("form-password") String password) {
+		User user = userService.getUserByUserNameAndPsw(userName, password);
 		if(user == null) {
 			// 无当前用户, 跳转至失败页面
 			return "error";

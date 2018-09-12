@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+ "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.bigdata.dao.TaskManagementMapper">
+
+	<resultMap type="com.bigdata.beans.TaskManagement" id="taskManagementMapper">
+		<id column="taskId" property="taskId" />
+		<result column="devIP" property="devIP" />
+		<result column="tmstatus" property="tmstatus" />
+		<result column="tmdescribe" property="tmdescribe" />
+		<result column="addTime" property="addTime" />
+		
+		<association property="taskOwner"
+			select="com.bigdata.dao.getTaskOwnerById" column="taskOwnerId">
+		</association>
+		
+		<collection property="scanDataList" ofType="com.bigdata.beans.ScanData">
+			<!-- 定义这个集合中元素的封装规则 -->
+			<!-- column 对应数据库列名	property 对应 bean 属性名 -->
+			<id column="scanId" property="scanId" />
+			<result column="devInfo" property="devInfo" />
+			<result column="vulnerInfo" property="vulnerInfo" />
+			<result column="ouccrTime" property="ouccrTime" />
+			<result column="newStatus" property="newStatus" />
+		</collection>
+	</resultMap>
+
+	<sql id="columns">
+		(devIP, tmstatus, tmdescribe, addTime, ownerId)
+	</sql>
+	
+	<!-- 通过 taskId 获取 TaskManagement 对象信息: public TaskManagement getTaskManagementMapperById(Integer taskId); -->
+	<select id="getTaskManagementMapperById" resultMap="taskManagementMapper">
+		select * from TaskManagement taskManagement, ScanData scanData
+		<where>
+			taskManagement.taskId = scanData.taskId
+			and taskManagement.taskId = #{taskManagement.taskId}
+		</where>
+	</select>
+	
+	<!-- 通过 taskManagementMapper 属性信息筛选 <TaskManagementMapper> 表中信息: public TaskManagement getTaskManagementMapperByEntity(TaskManagementMapper taskManagementMapper); -->
+	<select id="getTaskManagementMapperByEntity" resultMap="taskManagementMapper">
+		select * from TaskManagement tm, ScanData sd
+		<where>
+			1 = 1
+			<if test="taskId != null">
+				and tm.taskId = #{taskId} and tm.taskId = sd.taskId
+			</if>
+			<if test="devIP != null">
+				and devIP = #{devIP}
+			</if>
+			<if test="status != null">
+				and status = #{status}
+			</if>
+			<if test="describe != null">
+				and describe = #{describe}
+			</if>
+			<if test="addTime != null">
+				and addTime = #{addTime}
+			</if>
+			<if test="taskOwner != null">
+				and ownerId = #{taskOwner.taskOwnerId},
+			</if>
+		</where>
+	</select>
+	
+	<!-- 添加 TaskManagementMapper 对象信息并返回主键值: public int addTaskManagement(TaskManagement taskManagement); -->
+	<insert id="addTaskManagement" useGeneratedKeys="true" keyProperty="taskId" parameterType="com.bigdata.beans.TaskManagement">
+		insert into TaskManagement
+		<include refid="columns" />
+		values
+		(#{devIP}, #{tmstatus}, #{tmdescribe}, #{addTime}, #{taskOwner.taskOwnerId})
+	</insert>
+	
+	<!-- 通过 taskId 删除指定 TaskManagementMapper 对象信息: public void deleteTaskManagementById(Integer taskId); -->
+	<delete id="deleteTaskManagementById">
+		delete from TaskManagement where taskId = #{taskId}
+	</delete>
+	
+	<!-- 获取所有 TaskManagementMapper 对象信息: public List<TaskManagement> getAllTaskManagement(); -->
+	<select id="getAllTaskManagement" resultMap="taskManagementMapper">
+		select * from TaskManagement tm, ScanData sd
+	</select>
+	
+	<!-- 通过 TaskManagementMapper 属性模糊查询 <TaskManagementMapper> 表中信息: public List<TaskManagement> getTaskManagementByEntityForLike(TaskManagement taskManagement); -->
+	<select id="getTaskManagementByEntityForLike" resultMap="taskManagementMapper">
+		select * from TaskManagement tm, ScanData sd
+		<where>
+			1 = 1
+			<if test="taskId != null">
+				and tm.taskId = #{taskId} and tm.taskId = sd.taskId
+			</if>
+			<if test="devIP != null">
+				and devIP like CONCAT(CONCAT('%', #{devIP}, '%'))
+			</if>
+			<if test="tmstatus != null">
+				and tmstatus like CONCAT(CONCAT('%', #{tmstatus}, '%'))
+			</if>
+			<if test="tmdescribe != null">
+				and tmdescribe like CONCAT(CONCAT('%', #{tmdescribe}, '%'))
+			</if>
+			<if test="addTime != null">
+				and addTime like CONCAT(CONCAT('%', #{addTime}, '%'))
+			</if>
+			<if test="taskOwner != null">
+				and ownerId like CONCAT(CONCAT('%', #{taskOwner.taskOwnerId}, '%'))
+			</if>
+		</where>
+	</select>
+	
+	<!-- 根据 taskManagement 对象属性查询数据库表中信息, 不进行连接查询: public List<TaskManagement> getTaskManagementMsgByEntity(TaskManagement taskManagement); -->
+	<select id="getTaskManagementMsgByEntity" resultType="com.bigdata.beans.TaskManagement">
+		select * from TaskManagement tm
+		<where>
+			1 = 1
+			<if test="taskId != null">
+				tm.taskId = #{taskId} and tm.taskId = sd.taskId
+			</if>
+			<if test="devIP != null">
+				and devIP like CONCAT(CONCAT('%', #{devIP}, '%'))
+			</if>
+			<if test="tmstatus != null">
+				and tmstatus like CONCAT(CONCAT('%', #{tmstatus}, '%'))
+			</if>
+			<if test="tmdescribe != null">
+				and tmdescribe like CONCAT(CONCAT('%', #{tmdescribe}, '%'))
+			</if>
+			<if test="addTime != null">
+				and addTime like CONCAT(CONCAT('%', #{addTime}, '%'))
+			</if>
+		</where>
+	</select>
+	
+	<!-- 根据 TaskManagement 对象属性更新 <TaskManagement> 表中信息: public void updateTaskManagement(TaskManagement taskManagement); -->
+	<update id="updateTaskManagement">
+		update TaskManagement
+		<trim prefix="set" suffixOverrides=",">
+			<if test="devIP != null">
+				devIP = #{devIP},
+			</if>
+			<if test="tmstatus != null">
+				tmstatus = #{tmstatus},
+			</if>
+			<if test="tmdescribe != null">
+				tmdescribe = #{tmdescribe},
+			</if>
+			<if test="addTime != null">
+				addTime = #{addTime},
+			</if>
+			<if test="taskOwner != null">
+				ownerId = #{taskOwner.taskOwnerId},
+			</if>
+	 	</trim>
+		<where>
+			taskId = #{taskId}
+		</where>
+	</update>
+
+</mapper>

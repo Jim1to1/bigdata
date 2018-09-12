@@ -9,17 +9,17 @@ public class User {
 
 	private Integer userId;
 	private String userName;
-	private String passWord;
+	private String password;
 	
 	public User() {
 		super();
 	}
 
-	public User(Integer userId, String userName, String passWord) {
+	public User(Integer userId, String userName, String password) {
 		super();
 		this.userId = userId;
 		this.userName = userName;
-		this.passWord = passWord;
+		this.password = password;
 	}
 
 	public Integer getUserId() {
@@ -38,17 +38,17 @@ public class User {
 		this.userName = userName;
 	}
 
-	public String getPassWord() {
-		return passWord;
+	public String getPassword() {
+		return password;
 	}
 
-	public void setPassWord(String passWord) {
-		this.passWord = passWord;
+	public void setPassword(String password) {
+		this.password = password;
 	}
 
 	@Override
 	public String toString() {
-		return "User [userId=" + userId + ", userName=" + userName + ", passWord=" + passWord + "]";
+		return "User [userId=" + userId + ", userName=" + userName + ", password=" + password + "]";
 	}
 	
 }

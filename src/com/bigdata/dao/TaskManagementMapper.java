@@ -16,14 +16,14 @@ public interface TaskManagementMapper {
 	 * @param taskId
 	 * @return
 	 */
-	public TaskManagementMapper getTaskManagementMapperById(Integer taskId);
+	public TaskManagement getTaskManagementMapperById(Integer taskId);
 	
 	/**
 	 * 通过 taskManagementMapper 属性信息筛选 <TaskManagementMapper> 表中信息
 	 * @param taskManagementMapper
 	 * @return
 	 */
-	public TaskManagementMapper getTaskManagementMapperByEntity(TaskManagement taskManagement);
+	public TaskManagement getTaskManagementMapperByEntity(TaskManagement taskManagement);
 	
 	/**
 	 * 添加 TaskManagementMapper 对象信息并返回主键值
@@ -52,9 +52,16 @@ public interface TaskManagementMapper {
 	public List<TaskManagement> getTaskManagementByEntityForLike(TaskManagement taskManagement);
 	
 	/**
-	 * 根据 TaskManagementMapper 对象属性更新 <TaskManagementMapper> 表中信息
+	 * 根据 TaskManagement 对象属性更新 <TaskManagement> 表中信息
 	 * @param taskManagement
 	 */
 	public void updateTaskManagement(TaskManagement taskManagement);
+	
+	/**
+	 * 根据 taskManagement 对象属性查询数据库表中信息, 不进行连接查询
+	 * @param taskManagement
+	 * @return
+	 */
+	public List<TaskManagement> getTaskManagementMsgByEntity(TaskManagement taskManagement);
 	
 }
