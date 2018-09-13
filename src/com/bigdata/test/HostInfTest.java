@@ -10,17 +10,21 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 import com.bigdata.beans.HostInf;
 import com.bigdata.service.HostInfService;
+import com.bigdata.tools.JsonNode;
+
+import net.sf.json.JSONObject;
 
 public class HostInfTest {
 	
 	@Autowired
 	private HostInfService hostInfService;
+	private ApplicationContext applicationContext = null;
 	
 	@Before
 	public void before() {
-		ApplicationContext applicationContext = new ClassPathXmlApplicationContext("classpath:applicationContext.xml");
+		applicationContext  = new ClassPathXmlApplicationContext("classpath:applicationContext.xml");
 		
-		hostInfService = (HostInfService) applicationContext.getBean("hostInfService");
+		hostInfService = (HostInfService) applicationContext .getBean("hostInfService");
 		// System.out.println(hostInfService);
 	}
 
@@ -28,14 +32,6 @@ public class HostInfTest {
 	public void testGetHostInfById() {
 		HostInf hostInf = hostInfService.getHostInfById(1);
 		System.out.println(hostInf);
-	}
-	
-	@Test
-	public void testGetHostInfByEntity() {
-		HostInf hostInf = new HostInf();
-		hostInf.setDevIP("192.168.1.114");
-		
-		System.out.println(hostInfService.getHostInfByEntity(hostInf));
 	}
 	
 	@Test
@@ -72,6 +68,21 @@ public class HostInfTest {
 		hostInfService.updateHostInfByEntity(hostInf);
 		
 		System.out.println(hostInfService.getHostInfById(23));
+	}
+	
+	@Test
+	public void testReadJson() {
+		HostInf hostInf = new HostInf();
+		hostInf.setDevIP("127.0.0.1");
+		hostInf.setIndicator("PC2");
+		List<HostInf> hostInfList = hostInfService.getHostInfByEntityForList(hostInf);
+		
+		System.out.println(hostInfList.get(hostInfList.size() - 1));
+		
+		JSONObject jsonObject = JSONObject.fromObject(hostInfList.get(hostInfList.size() - 1).getMsg());
+		JsonNode jsonNode = (JsonNode) JSONObject.toBean(jsonObject, JsonNode.class);
+		
+		System.out.println(jsonNode);
 	}
 
 }

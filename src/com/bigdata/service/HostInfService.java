@@ -24,15 +24,6 @@ public class HostInfService {
 	}
 
 	/**
-	 * 通过 hostInf 对象属性查询指定 hostInf 对象
-	 * @param hostInf
-	 * @return
-	 */
-	public HostInf getHostInfByEntity(HostInf hostInf) {
-		return hostInfMapper.getHostInfByEntity(hostInf);
-	}
-
-	/**
 	 * 添加 hostInf 到数据库中
 	 * @param hostInf
 	 * @return
@@ -65,6 +56,15 @@ public class HostInfService {
 	 */
 	public void updateHostInfByEntity(HostInf hostInf) {
 		hostInfMapper.updateHostInfByEntity(hostInf);
+	}
+
+	/**
+	 * 通过 hostInf 对象实体属性筛选获取 HostInf 表中信息
+	 * @param hostInf
+	 * @return
+	 */
+	public List<HostInf> getHostInfByEntityForList(HostInf hostInf) {
+		return hostInfMapper.getHostInfByEntityForList(hostInf);
 	}
 	
 }

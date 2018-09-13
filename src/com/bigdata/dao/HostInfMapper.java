@@ -19,11 +19,11 @@ public interface HostInfMapper {
 	public HostInf getHostInfById(Integer hostId);
 	
 	/**
-	 * 通过 hostInf 对象实体属性筛选获取 HostInf 对象实体
+	 * 通过 hostInf 对象实体属性筛选获取 HostInf 表中信息
 	 * @param hostInf
 	 * @return
 	 */
-	public HostInf getHostInfByEntity(HostInf hostInf);
+	public List<HostInf> getHostInfByEntityForList(HostInf hostInf);
 	
 	/**
 	 * 添加 HostInf 信息

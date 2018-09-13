@@ -25,7 +25,7 @@ public class IndustrialController {
 		IndustrialProtocol industrialProtocol = gson.fromJson(jsonStr, IndustrialProtocol.class);
 		System.out.println("industrialProtocol: " + industrialProtocol);
 		
-		System.out.println("insertId: " + industrialProtocolService.insertIndustrialProtocol(industrialProtocol));
+		System.out.println("insertId: " + industrialProtocolService.addIndustrialProtocol(industrialProtocol));
 		
 		return "success";
 	}

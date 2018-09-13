@@ -25,8 +25,8 @@
 		</where>
 	</select>
 	
-	<!-- 通过 hostInf 对象实体属性筛选获取 HostInf 对象实体: public HostInf getHostInfByEntity(HostInf hostInf); -->
-	<select id="getHostInfByEntity" resultType="com.bigdata.beans.HostInf">
+	<!-- 通过 hostInf 对象实体属性筛选获取 HostInf 表中信息: public List<HostInf> getHostInfByEntityForList(HostInf hostInf); -->
+	<select id="getHostInfByEntityForList" resultType="com.bigdata.beans.HostInf">
 		select * from HostInf
 		<where>
 			1 = 1
@@ -37,16 +37,13 @@
 				and devIP = #{devIP}
 			</if>
 			<if test="macAddress != null">
-				and hostId = #{hostId}
+				and macAddress = #{macAddress}
 			</if>
 			<if test="indicator != null">
-				and hostId = #{hostId}
+				and indicator = #{indicator}
 			</if>
 			<if test="devType != null">
-				and hostId = #{hostId}
-			</if>
-			<if test="msg != null">
-				and hostId = #{hostId}
+				and devType = #{devType}
 			</if>
 		</where>
 	</select>

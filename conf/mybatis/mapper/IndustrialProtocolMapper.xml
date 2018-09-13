@@ -2,44 +2,100 @@
 <!DOCTYPE mapper
  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.bigdata.dao.IndustrialProtocolMapper">
-	<resultMap type="com.bigdata.beans.IndustrialProtocol" id="industrialProtocolMapper">
+ <mapper namespace="com.bigdata.dao.IndustrialProtocolMapper">
+ 	<resultMap type="com.bigdata.beans.IndustrialProtocol" id="industrialProtocolMapper">
 		<id column="protocolId" property="protocolId" />
 		<result column="protocolName" property="protocolName" />
-		<result column="recepTime" property="recepTime" />
-		<result column="destIp" property="destIp" />
-		<result column="srcIp" property="srcIp" />
-		<result column="protocolInfo" property="protocolInfo" />
+		<result column="recepTime" property="recepTime"/>
+		<result column="destIp" property="destIp"/>
+		<result column="srcIp" property="srcIp"/>
+		<result column="protocolInfo" property="protocolInfo"/>
 	</resultMap>
 
 	<sql id="columns">
 		(protocolName, recepTime, destIp, srcIp, protocolInfo)
 	</sql>
-
+	
 	<!-- 通过用户 id 号获取指定IndustrialProtocol: public IndustrialProtocol getIndustrialProtocolById(Integer protocolId); -->
-	<select id="getIndustrialProtocolById" resultType="com.bigdata.beans.IndustrialProtocol">
-		select * from IndustrialProtocol
+	<select id="getIndustrialProtocolById" resultMap="industrialProtocolMapper">
+		select * from IndustrialProtocol 
 		<where>
 			protocolId = #{protocolId}
 		</where>
 	</select>
-
-	<!-- 通过 IndustrialProtocol 对象属性筛选 <IndustrialProtocol> 表中信息: public IndustrialProtocol getIndustrialProtocolByEntity(IndustrialProtocol industrialProtocol); -->
-
-	<!-- 添加 IndustrialProtocol 对象信息并返回主键值: public int addIndustrialProtocol(IndustrialProtocol industrialProtocol); -->
+	
+ 	<!-- 通过 IndustrialProtocol 对象属性筛选 <IndustrialProtocol> 表中信息: public IndustrialProtocol getIndustrialProtocolByEntity(IndustrialProtocol industrialProtocol); -->
+ 	
+ 	
+ 	<!-- 添加 IndustrialProtocol 对象信息并返回主键值: public int addIndustrialProtocol(IndustrialProtocol industrialProtocol);-->
 	<insert id="addIndustrialProtocol" useGeneratedKeys="true" keyProperty="protocolId" parameterType="com.bigdata.beans.IndustrialProtocol">
 		insert into IndustrialProtocol
-		<include refid="columns" />
-		values
-		(#{protocolName}, #{recepTime}, #{destIp}, #{srcIp}, #{protocolInfo})
+		<include refid="columns"/>
+		values 
+		(#{protocolName},#{recepTime},#{destIp},#{srcIp},#{protocolInfo})
 	</insert>
-
+	
 	<!-- 通过 protocolId 删除指定 IndustrialProtocol 对象: public void deleteIndustrialProtocolById(Integer protocolId); -->
-
+	<delete id="deleteIndustrialProtocolById">
+		delete from IndustrialProtocol
+		<where>
+			protocolId = #{protocolId}
+		</where>
+	</delete>
+	
 	<!-- 获取全部 <IndustrialProtocol> 表中信息: public List<IndustrialProtocol> getAllIndustrialProtocol(); -->
-
+	<select id="getAllIndustrialProtocol" resultType="com.bigdata.beans.IndustrialProtocol">
+		select * from IndustrialProtocol
+	</select>
+	
 	<!-- 通过 IndustrialProtocol 对象属性模糊查询 IndustrialProtocol 列表: public List<IndustrialProtocol> getIndustrialProtocolByEntityForLike(IndustrialProtocol industrialProtocol); -->
-
+	<select id="getIndustrialProtocolByEntityForLike" resultType="com.bigdata.beans.IndustrialProtocol">
+	select * from IndustrialProtocol
+		<where>
+			1=1
+			<if test="protocolId != null">
+				and protocolId like CONCAT(CONCAT('%', #{protocolId}, '%'))
+			</if>
+			<if test="protocolName != null">
+				and protocolName like CONCAT(CONCAT('%', #{protocolName}, '%'))
+			</if>
+			<if test="recepTime != null">
+				and recepTime like CONCAT(CONCAT('%', #{recepTime}, '%'))
+			</if>
+			<if test="destIp != null">
+				and destIp like CONCAT(CONCAT('%', #{destIp}, '%'))
+			</if>
+			<if test="srcIp != null">
+				and srcIp like CONCAT(CONCAT('%', #{srcIp}, '%'))
+			</if>
+			<if test="protocolInfo != null">
+				and protocolInfo like CONCAT(CONCAT('%', #{protocolInfo}, '%'))
+			</if>
+		</where>
+	</select>
+	
 	<!-- 通过 IndustrialProtocol 对象属性更新 <IndustrialProtocol> 表中信息: public void updateIndustrialProtocol(IndustrialProtocol industrialProtocol); -->
-
-</mapper>
+	<update id="updateIndustrialProtocol">
+		update IndustrialProtocol
+		<trim prefix="set" suffixOverrides=",">
+			<if test="protocolName != null">
+				protocolName = #{protocolName}
+			</if>
+			<if test="recepTime != null">
+				recepTime = #{recepTime}
+			</if>
+			<if test="destIp != null">
+				destIp = #{destIp}
+			</if>
+			<if test="srcIp != null">
+				srcIp = #{srcIp}
+			</if>
+			<if test="protocolInfo != null">
+				protocolInfo = #{protocolInfo}
+			</if>
+		</trim>
+		<where>
+			protocolId = #{protocolId}
+		</where>
+	</update>
+ </mapper>

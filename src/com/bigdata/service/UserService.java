@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.bigdata.beans.User;
 import com.bigdata.dao.UserMapper;
+import com.bigdata.tools.Encoder;
 
 @Service
 public class UserService {
@@ -30,7 +31,11 @@ public class UserService {
 	 * @return
 	 */
 	public User getUserByUserNameAndPsw(String userName, String password) {
-		return userMapper.getUserByUserNameAndPsw(userName, password);
+		String md5Psw = Encoder.EncoderByMd5(password);
+		
+		User user = userMapper.getUserByUserNameAndPsw(userName, md5Psw);
+		
+		return user;
 	}
 	
 	/**
