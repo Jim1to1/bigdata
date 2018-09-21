@@ -3,8 +3,7 @@ package com.bigdata.tools;
 import java.io.UnsupportedEncodingException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
-
-import sun.misc.BASE64Encoder;
+import java.util.Base64;
 
 public class Encoder {
 	
@@ -24,12 +23,16 @@ public class Encoder {
 		} catch (NoSuchAlgorithmException e) {
 			e.printStackTrace();
 		}
-        BASE64Encoder base64en = new BASE64Encoder();
+//        BASE64Encoder base64en = new BASE64Encoder();
+		java.util.Base64.Encoder encoder = Base64.getEncoder();
+
+        //String encode = encoder.encodeToString(data);
         
         //加密后的字符串
         String newstr = null;
 		try {
-			newstr = base64en.encode(md5.digest(str.getBytes("UTF-8")));
+//			newstr = base64en.encode(md5.digest(str.getBytes("UTF-8")));
+			newstr = encoder.encodeToString(md5.digest(str.getBytes("UTF-8")));
 		} catch (UnsupportedEncodingException e) {
 			e.printStackTrace();
 		}

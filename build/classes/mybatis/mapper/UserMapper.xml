@@ -8,10 +8,11 @@
 		<id column="userId" property="userId" />
 		<result column="userName" property="userName" />
 		<result column="password" property="password"/>
+		<result column="role" property="role"/>
 	</resultMap>
 
 	<sql id="columns">
-		(userName, password)
+		(userName, password, role)
 	</sql>
 	
 	<!-- 通过用户 id 号获取指定用户: public User getUserById(Integer userId); -->
@@ -41,7 +42,7 @@
 		insert into user
 		<include refid="columns" />
 		values 
-		(#{userName}, #{password})
+		(#{userName}, #{password}, #{role})
 	</insert>
 	
 	<!-- 通过用户对象属性更新用户: public void updateUser(User user); -->
@@ -53,6 +54,9 @@
 			</if>
 			<if test="password != null">
 				password = #{password}
+			</if>
+			<if test="role != null">
+				role = #{role}
 			</if>
 	 	</trim>
 		<where>
@@ -79,6 +83,15 @@
 			<if test="password != null">
 				and password like CONCAT(CONCAT('%', #{password}, '%'))
 			</if>
+			<if test="role != null">
+				and role like CONCAT(CONCAT('%', #{role}, '%'))
+			</if>
 		</where>
 	</select>
+	
+	<!-- 通过用户名查看 <User> 表是否存在指定用户名: public User getUserByUsername(@Param("username")String username); -->
+	<select id="getUserByUsername" resultType="com.bigdata.beans.User">
+		select * from User where userName = #{username}
+	</select>
+	
 </mapper>

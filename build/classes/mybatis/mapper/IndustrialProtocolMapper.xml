@@ -50,7 +50,7 @@
 	
 	<!-- 通过 IndustrialProtocol 对象属性模糊查询 IndustrialProtocol 列表: public List<IndustrialProtocol> getIndustrialProtocolByEntityForLike(IndustrialProtocol industrialProtocol); -->
 	<select id="getIndustrialProtocolByEntityForLike" resultType="com.bigdata.beans.IndustrialProtocol">
-	select * from IndustrialProtocol
+		select * from IndustrialProtocol
 		<where>
 			1=1
 			<if test="protocolId != null">

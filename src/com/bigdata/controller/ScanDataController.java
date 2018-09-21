@@ -26,7 +26,7 @@ public class ScanDataController {
 		Gson gson = new Gson();
 		ScanData scanData = gson.fromJson(jsonStr, ScanData.class);
 		
-		System.out.println(scanData);
+//		System.out.println(scanData);
 		
 		TaskManagement taskManagement = new TaskManagement();
 		taskManagement.setTaskId(scanData.getTaskId());

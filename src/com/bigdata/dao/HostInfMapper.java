@@ -57,4 +57,11 @@ public interface HostInfMapper {
 	 */
 	public void updateHostInfByEntity(HostInf hostInf);
 	
+	/**
+	 * 通过 hostInf 属性精准查询最后一个 hostInf 信息
+	 * @param hostInf
+	 * @return
+	 */
+	public HostInf getLastHostInfByEntity(HostInf hostInf);
+	
 }

@@ -58,4 +58,11 @@ public interface UserMapper {
 	 */
 	public List<User> getUserByPropertisForLike(User user);
 	
+	/**
+	 * 通过用户名查看 <User> 表是否存在指定用户名
+	 * @param username
+	 * @return
+	 */
+	public User getUserByUsername(@Param("username")String username);
+	
 }

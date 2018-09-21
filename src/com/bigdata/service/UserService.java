@@ -82,5 +82,17 @@ public class UserService {
 			userMapper.updateUser(user);
 		}
 	}
+
+	/**
+	 * 验证指定用户名是否存在
+	 * @param username
+	 * @return true: 已经存在	false: 不存在
+	 */
+	public boolean validateIsExist(String username) {
+		if(userMapper.getUserByUsername(username) != null) {
+			return true;
+		}
+		return false;
+	}
 	
 }

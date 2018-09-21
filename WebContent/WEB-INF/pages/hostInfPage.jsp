@@ -1,5 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%
 	String path = request.getContextPath();
@@ -117,6 +116,7 @@
 
 			<!-- Main Container -->
 			<div class="container">
+				<!-- begin -->
 				<div class="mws-panel grid_4">
 					<div class="mws-panel-header">
 						<span class="mws-i-24 i-table-1">基础配置</span>
@@ -165,31 +165,18 @@
 							</thead>
 							<tbody>
 								<tr>
-									<td>C:\\</td>
-									<td>237.227GB</td>
-									<td>NTFS</td>
-									<td>rw,fixed</td>
-									<td>102.058GB</td>
-									<td>135.169GB</td>
-									<td>43.0%</td>
-								</tr>
-								<tr>
-									<td>D:\\</td>
-									<td>237.227GB</td>
-									<td>NTFS</td>
-									<td>rw,fixed</td>
-									<td>102.058GB</td>
-									<td>135.169GB</td>
-									<td>43.0%</td>
-								</tr>
-								<tr>
-									<td>E:\\</td>
-									<td>237.227GB</td>
-									<td>NTFS</td>
-									<td>rw,fixed</td>
-									<td>102.058GB</td>
-									<td>135.169GB</td>
-									<td>43.0%</td>
+									<!-- pc2List -->
+									<c:forEach items="${pc2List}" var="pc2">
+										<tr>
+											<td>${pc2.param1 }</td>
+											<td>${pc2.param2 }</td>
+											<td>${pc2.param3 }</td>
+											<td>${pc2.param4 }</td>
+											<td>${pc2.param5 }</td>
+											<td>${pc2.param6 }</td>
+											<td>${pc2.param7 }</td>
+										</tr>
+									</c:forEach>
 								</tr>
 							</tbody>
 						</table>
@@ -209,18 +196,13 @@
 								</tr>
 							</thead>
 							<tbody>
-								<tr>
-									<td>1394bus.sys</td>
-									<td>C:\\Windows\System32\1394.sys</td>
-								</tr>
-								<tr>
-									<td>mousepad.sys</td>
-									<td>C:\\Windows\System32\mousepad.sys</td>
-								</tr>
-								<tr>
-									<td>keyboard.sys</td>
-									<td>C:\\Windows\System32\keyboard.sys</td>
-								</tr>
+								<!-- pc3List -->
+								<c:forEach items="${pc3List}" var="pc3">
+									<tr>
+										<td>${pc3.param1 }</td>
+										<td>${pc3.param2 }</td>
+									</tr>
+								</c:forEach>
 							</tbody>
 						</table>
 					</div>

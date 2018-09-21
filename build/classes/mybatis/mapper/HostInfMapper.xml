@@ -116,5 +116,29 @@
 			hostId = #{hostId}
 		</where>
 	</update>
+	
+	<!-- 通过 hostInf 属性精准查询最后一个 hostInf 信息: public HostInf getLastHostInfByEntity(HostInf hostInf); -->
+	<select id="getLastHostInfByEntity" resultType="com.bigdata.beans.HostInf">
+		select * from HostInf
+		<where>
+			1 = 1
+			<if test="hostId != null">
+				and hostId = #{hostId}
+			</if>
+			<if test="devIP != null">
+				and devIP = #{devIP}
+			</if>
+			<if test="macAddress != null">
+				and macAddress = #{macAddress}
+			</if>
+			<if test="indicator != null">
+				and indicator = #{indicator}
+			</if>
+			<if test="devType != null">
+				and devType = #{devType}
+			</if>
+			order by hostId desc limit 1
+		</where>
+	</select>
 
 </mapper>
