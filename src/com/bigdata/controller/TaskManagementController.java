@@ -27,7 +27,7 @@ public class TaskManagementController {
 		
 		response.addHeader("Content-Type", "application/json;charset=UTF-8");
 		List<TaskManagement> resultList = taskManagementService.getTaskManagementMsgByEntity(taskManagement);
-		System.out.println(resultList.size());
+		// System.out.println(resultList.size());
 		
 		return resultList;
 		

@@ -1,6 +1,7 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %> 
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <%
 	String path = request.getContextPath();
 %>
@@ -102,7 +103,7 @@
 
 <script type="text/javascript" src="<%=path%>/js/demo.dashboard.js"></script>
 
-<title>工业大数据安全管理平台 - 日志追踪</title>
+<title>工业大数据安全管理平台 - 漏洞库</title>
 
 </head>
 <body>
@@ -120,35 +121,34 @@
 
 				<div class="mws-panel grid_8">
 					<div class="mws-panel-header">
-						<span class="mws-i-24 i-table-1">Windows 安全日志追踪</span>
+						<span class="mws-i-24 i-upload">Windows漏洞上传</span>
 					</div>
 					<div class="mws-panel-body">
-						<table class="mws-datatable-fn mws-table">
-							<thead>
-								<tr>
-									<th>事件ID</th>
-									<th>任务类别</th>
-									<th>关键字</th>
-									<th>来源</th>
-									<th>日期与时间</th>
-									<th>详情</th>
-									<th>描述</th>
-								</tr>
-							</thead>
-							<tbody>
-								<c:forEach items="${pc12List}" var="pc12" varStatus="id">
-									<tr>
-										<td>${pc12.param1 }</td>
-										<td>${pc12.param2 }</td>
-										<td>${pc12.param3 }</td>
-										<td>${pc12.param4 }</td>
-										<td>${pc12.param5 }</td>
-										<td>${pc12.param6 }</td>
-										<td>${pc12.param7 }</td>
-									</tr>
-								</c:forEach>
-							</tbody>
-						</table>
+						<div id="uploader">
+							<p>You browser doesn't have Flash, Silverlight, Gears, BrowserPlus or HTML5 support.</p>
+						</div>
+					</div>
+				</div>
+
+				<div class="mws-panel grid_8">
+					<div class="mws-panel-header">
+						<span class="mws-i-24 i-upload">工业应用漏洞上传</span>
+					</div>
+					<div class="mws-panel-body">
+						<div id="uploader2">
+							<p>You browser doesn't have Flash, Silverlight, Gears, BrowserPlus or HTML5 support.</p>
+						</div>
+					</div>
+				</div>
+
+				<div class="mws-panel grid_8">
+					<div class="mws-panel-header">
+						<span class="mws-i-24 i-upload">网络协议漏洞上传</span>
+					</div>
+					<div class="mws-panel-body">
+						<div id="uploader3">
+							<p>You browser doesn't have Flash, Silverlight, Gears, BrowserPlus or HTML5 support.</p>
+						</div>
 					</div>
 				</div>
 

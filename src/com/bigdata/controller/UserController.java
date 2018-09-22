@@ -77,6 +77,7 @@ public class UserController {
 		} else {
 			// 有当前用户，跳转至主界面
 			session.setAttribute("loginIP", request.getRemoteAddr());
+			// System.out.println(request.getRemoteAddr());
 			session.setAttribute("user", user);
 			return "index";
 		}

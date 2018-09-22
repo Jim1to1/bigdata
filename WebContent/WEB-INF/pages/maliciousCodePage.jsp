@@ -101,64 +101,43 @@
 <script type="text/javascript" src="<%=path%>/js/themer.js"></script>
 
 <script type="text/javascript" src="<%=path%>/js/demo.dashboard.js"></script>
-<script type="text/javascript" src="<%=path%>/scripts/jquery-1.10.2.js"></script>
-
-<title>工业大数据安全管理平台 - 恶意代码库</title>
-
+<%-- <script type="text/javascript" src="<%=path%>/scripts/jquery-1.10.2.js"></script> --%>
 <script type="text/javascript">
-	$(function() {
-		var ids = new Array();
+	
+	var ids = new Array();
+	var status = false;
+	function aClick() {
 		//alert(111);
-		//实现全选与反选  
-		$("#allAndNotAll").click(function() {
-			/* if (this.checked) {
-				$("input[name='codeSelect']:checkbox").each(function() {
-					$(this).prop("checked", true);
-
-					ids.push($(this).attr("value"));
-				});
-			} else {
-				$("input[name='codeSelect']:checkbox").each(function() {
-					$(this).prop("checked", false);
-				});
-			} */
+		console.log("***status: " + status);
+		// 更改状态为选中
+		// status = true;
+		
+		// 选中
+		if(status == true) {
+			console.log("进入 if...");
+			
+			status = false;
 			$("input[name='codeSelect']:checkbox").each(function() {
 				$(this).prop("checked", true);
-
+				
 				ids.push($(this).attr("value"));
 			});
-			//var delIds=ids.join(",");   
-			//console.log(delIds);
-			// console.log(ids);
-		});
-
-		$("input[name='codeSelect']:checkbox").click(function() {
-			ids.push($(this).attr("value"));
-			$("#allAndNotAll").prop("checked", false);
-		});
-
-		// 监听删除事件, 若没有选中删除条目, 提示未选中
-		/* $("#deleteUser").click(function() {
-
-			if (ids.length == 0) {
-				alert("请选择删除内容项");
-			} else {
-				// alert(ids);
-				//向后台交互
-				$.ajax({
-					url : "deleteUserById",
-					type: "post",
-					data:{"ids": ids},
-					traditional: true, //这里设置为true
-					success : function(data) {
-						//do sth...
-						window.location.reload();
-					}
-				});
-			}
-
-		}); */
-	});
+			
+		} 
+		else {
+			console.log("进入 else...");
+			
+			status = true;
+			$("input[name='codeSelect']:checkbox").each(function() {
+				$(this).prop("checked", false);
+				
+			});
+		}
+		
+		console.log("status: " + status);
+		
+	};
+	
 </script>
 
 <title>工业大数据安全管理平台 - 恶意代码库</title>
@@ -188,7 +167,10 @@
 	                            <li><a href="#" class="mws-ic-16 ic-cross" id="allAndNotAll">删除</a></li>
 	                            <li><a href="#" class="mws-ic-16 ic-printer">打印</a></li>
 	                            <li><a href="#" class="mws-ic-16 ic-arrow-refresh">刷新</a></li>
-	                            <li><a href="#" class="mws-ic-16 ic-edit">修改更新</a></li>
+	                            <li><a onclick="aClick()" class="mws-ic-16 ic-edit">修改更新</a></li>
+<!-- 	                            <li><button id="" class="mws-ic-16 ic-add">添加</button></li>
+	                            <li><button id="" class="mws-ic-16 ic-cross" id="allAndNotAll">删除</button></li>
+	                            <li><button id="allAndNotAll" class="mws-ic-16 ic-edit">全选/反选</button></li> -->
 	                        </ul>
 	                    </div>
 						<table class="mws-datatable-fn mws-table">
@@ -218,6 +200,5 @@
 
 	</div>
 	<!-- End Container Wrapper -->
-
 </body>
 </html>

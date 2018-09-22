@@ -213,6 +213,6 @@
 		</div>
 		<!-- End Container Wrapper -->
 	</div>
-
+	<script type="text/javascript" src="<%=path%>/scripts/jquery-1.10.2.js"></script>
 </body>
 </html>
