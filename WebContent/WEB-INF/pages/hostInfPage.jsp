@@ -188,7 +188,7 @@
 						<span class="mws-i-24 i-table-1">驱动程序</span>
 					</div>
 					<div class="mws-panel-body">
-						<table class="mws-table">
+						<table class="mws-datatable-fn mws-table">
 							<thead>
 								<tr>
 									<th>驱动程序名称</th>

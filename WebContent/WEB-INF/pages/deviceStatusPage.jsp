@@ -101,7 +101,6 @@
 <script type="text/javascript" src="<%=path%>/js/themer.js"></script>
 
 <script type="text/javascript" src="<%=path%>/js/demo.dashboard.js"></script>
-<script type="text/javascript" src="<%=path%>/scripts/jquery-1.10.2.js"></script>
 
 <title>工业大数据安全管理平台 - 设备运行状态</title>
 
@@ -248,7 +247,7 @@
 								<tr>
 									<th>名称</th>
 									<th>安装状态</th>
-									<th>描述</th>
+									<!-- <th>描述</th> -->
 								</tr>
 							</thead>
 							<tbody>
@@ -257,7 +256,7 @@
 									<tr>
 										<td>${pc8.param1 }</td>
 										<td>${pc8.param2 }</td>
-										<td>${pc8.param3 }</td>
+										<%-- <td>${pc8.param3 }</td> --%>
 									</tr>
 								</c:forEach>
 							</tbody>

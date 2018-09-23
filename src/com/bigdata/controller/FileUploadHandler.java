@@ -55,9 +55,22 @@ public class FileUploadHandler {
 		
 		return "upload";
 	}
+	
+	@RequestMapping("/redirectUploadFilePage")
+	public String redirectUploadFilePage(HttpSession session) {
+		
+		User user = (User) session.getAttribute("user");
+		if(user == null) {
+			return "redirect:/login.jsp";
+		}
+		
+		return "uploadFilePage";
+	}
 
 	@RequestMapping("/fileUpload")
     public String fileUpload(@RequestParam("file") CommonsMultipartFile file, HttpServletRequest request) throws IOException {
+		//System.out.println("fileUpload: " + file);
+		
 		String uploadPath = "D:/uploadFile";
 		
         //String path = "E:/" + file.getOriginalFilename();

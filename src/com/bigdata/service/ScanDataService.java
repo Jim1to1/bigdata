@@ -51,6 +51,15 @@ public class ScanDataService {
 	}
 	
 	/**
+	 * 通过 ScanData 对象精准查询数据库表 <ScanData> 中信息
+	 * @param scanData
+	 * @return
+	 */
+	public List<ScanData> getScanDataByEntityForList(ScanData scanData) {
+		return scanDataMapper.getScanDataByEntityForList(scanData);
+	}
+	
+	/**
 	 * 通过 ScanData 对象属性更新数据库表中信息
 	 * @param scanData
 	 */

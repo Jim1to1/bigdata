@@ -48,7 +48,7 @@
 	href="<%=path%>/plugins/spinner/spinner.css" media="screen" />
 <link rel="stylesheet" type="text/css"
 	href="<%=path%>/css/jui/jquery.ui.css" media="screen" />
-
+	
 <!-- Theme Stylesheet -->
 <link rel="stylesheet" type="text/css"
 	href="<%=path%>/css/mws.theme.css" media="screen" />
@@ -101,36 +101,92 @@
 <script type="text/javascript" src="<%=path%>/js/themer.js"></script>
 
 <script type="text/javascript" src="<%=path%>/js/demo.dashboard.js"></script>
-<%-- <script type="text/javascript" src="<%=path%>/scripts/jquery-1.10.2.js"></script> --%>
+
 <script type="text/javascript">
 	var ids = new Array();
 	var status = false;
-	
-	window.onload = function () {
-		$("input[name='codeSelect']:checkbox").click(function() {
+
+	//每隔一段时间执行一次的函数
+	function getTaskStatus() {
+		//var tbody = window.document.getElementById("tbody-result");
+
+		$.ajax({
+			type : "POST",
+			url : "getTaskStatus",
+			dataType : "json",
+			success : function(data) {
+				var tbody = $("#mtbody");
+				
+				var str = "";
+	    	   	for(var i=0; i<data.length; i++) {
+	    	   		
+	    	   		// 奇数行
+	    	   		if(i % 2 == 1) {
+	    	   			str += "<tr class='odd'>";
+	    	   		}
+	    	   		// 偶数行
+	    	   		else {
+	    	   			str += "<tr class='even'>";	    	   			
+	    	   		}
+	    	   		
+		    	   	str += "<td><input type='checkbox' name='taskSelect' value=" + data[i].taskId + " /></td>";
+		    	   	str += "<td><a href='taskDetails?taskId=" + data[i].taskId + "'>" + data[i].tmdescribe + "</a></td>";
+		    	   	str += "<td>" + data[i].devIP + "</td>";
+		    	   	str += "<td>" + data[i].addTime + "</td>";
+		    	   	
+		    	   	var tmstatus = data[i].tmstatus;
+		    	   	if(tmstatus == 0) {
+		    	   		str += "<td><a href='taskStart?taskId=" + data[i].taskId + "'><img src='images/heupicture/task-start.png' height='20' width='20' /></a></td>";
+		    	   	}
+		    	   	else if(tmstatus == 1) {
+		    	   		str += "<td><img src='images/heupicture/task-running.png' height='20' width='20' /></td>";
+		    	   	}
+		    	   	else if(tmstatus == 2) {
+		    	   		str += "<td><img src='images/heupicture/task-complete.png' height='20' width='20' /></td>";
+		    	   	}
+		    	   	
+		    	   	str += "<tr>";
+	    	   	}
+	    	   	$("#mtbody").html(str);
+	    	   	//tbody.innerHTML = str;
+			}
+		});
+
+	};
+	//主动调用
+	setInterval("getTaskStatus()", 5000);
+
+	window.onload = function() {
+		$("input[name='taskSelect']:checkbox").click(function() {
 			ids.push($(this).attr("value"));
 		});
 	};
-	
-	/* $(function () {
-		alert(11);
-		$("input[name='codeSelect']:checkbox").click(function() {
-			ids.push($(this).attr("value"));
+
+	function getTaskDetails(taskId) {
+		//alert("taskId: " + taskId);
+		$.ajax({
+			url : "taskDetails",
+			type : "post",
+			data : {
+				"taskId" : taskId
+			},
+			traditional : true, //这里设置为true
+			success : function(data) {
+				//do sth...
+				window.location.reload();
+			}
 		});
-	}); */
-	
-	function deleteCode() {
-		/* deleteMaliciousCode */
 
-		// console.log(ids);
+	};
 
+	function deleteTask() {
 		if (ids.length == 0) {
 			alert("请选择删除内容项");
 		} else {
 			// alert(ids);
 			//向后台交互
-			/* $.ajax({
-				url : "deleteMaliciousCode",
+			$.ajax({
+				url : "deleteTaskManagementById",
 				type : "post",
 				data : {
 					"ids" : ids
@@ -138,16 +194,14 @@
 				traditional : true, //这里设置为true
 				success : function(data) {
 					//do sth...
-					windows.location.href = "redirectMaliciousCodePage";
+					window.location.reload();
 				}
-			}); */
-			window.location.href = "deleteMaliciousCode?ids=" + ids;
+			});
 		}
-
 	};
 </script>
 
-<title>工业大数据安全管理平台 - 恶意代码库</title>
+<title>工业大数据安全管理平台 - 漏洞检测</title>
 
 <!-- 测试添加 -->
 <style>
@@ -170,8 +224,8 @@
 	position: absolute;
 	top: 25%;
 	left: 25%;
-	width: 55%;
-	height: 55%;
+	width: 45%;
+	height: 45%;
 	padding: 5px;
 	border: 10px solid white;
 	background-color: Gainsboro;
@@ -185,25 +239,33 @@
 	
 	<!-- 测试部分 -->
 	<div id="light" class="white_content">
-		<form class="mws-form" action="addMeliciousCode" method="post">
-            <div class="mws-form-row">
-            	<div class="mws-form-item large">
-                	<input type="text" name="codeName" class="mws-login-username mws-textinput" placeholder="特征名称" />
-                </div>
-            </div>
-            <div class="mws-form-row">
-            	<div class="mws-form-item large">
-                	<input type="text" name="codeDescribe" class="mws-login-username mws-textinput" placeholder="特征描述" />
-                </div>
-            </div>
-            <div class="mws-form-row">
-            	<input type="submit" value="添加" class="mws-button green mws-login-button" />
-            	<a class="mws-button green mws-login-button" onclick="closeDialog()">关闭</a>
-            </div>
-        </form>
+		<br><br>
+		<center>
+		<h4>添加任务</h4>
+		</center>
+		<form class="mws-form" action="addTaskManagement" method="post">
+			<div class="mws-form-row">
+				<div class="mws-form-item large">
+					<input type="text" name="tmdescribe"
+						class="mws-login-username mws-textinput" placeholder="任务描述" />
+				</div>
+			</div>
+			<div class="mws-form-row">
+				<div class="mws-form-item large">
+					<input type="text" name="devIP"
+						class="mws-login-username mws-textinput" placeholder="扫描IP" />
+				</div>
+			</div>
+			<div class="mws-form-row">
+				<center>
+				<input type="submit" value="添加" class="mws-button green mws-login-button" /> 
+				<a class="mws-button green mws-login-button" onclick="closeDialog()">关闭</a>
+				</center>
+			</div>
+		</form>
 	</div>
 	<div id="fade" class="black_overlay"></div>
-	
+
 	<!-- Main Wrapper -->
 	<div id="mws-wrapper">
 		<%-- <%@include file="/menu.jsp"%> --%>
@@ -214,16 +276,17 @@
 
 			<!-- Main Container -->
 			<div class="container">
-
+				
 				<div class="mws-panel grid_8">
 					<div class="mws-panel-header">
-						<span class="mws-i-24 i-table-1">恶意代码库</span>
+						<span class="mws-i-24 i-table-1">漏洞任务列表</span>
 					</div>
 					<div class="mws-panel-body">
 						<div class="mws-panel-toolbar top clearfix">
 							<ul>
-								<li><a href = "JavaScript:void(0)" onclick = "openDialog()" class="mws-ic-16 ic-add">添加</a></li>
-								<li><a onclick="deleteCode()" class="mws-ic-16 ic-cross">删除选中项</a></li>
+								<li><a href="JavaScript:void(0)" onclick="openDialog()"
+									class="mws-ic-16 ic-add">添加</a></li>
+								<li><a onclick="deleteTask()" class="mws-ic-16 ic-cross">删除选中项</a></li>
 								<!-- <li><a href="#" class="mws-ic-16 ic-printer">打印</a></li> -->
 								<!-- <li><a href="#" class="mws-ic-16 ic-arrow-refresh">刷新</a></li> -->
 								<!-- <li><a onclick="aClick()" class="mws-ic-16 ic-edit">修改更新</a></li> -->
@@ -233,17 +296,31 @@
 						<table class="mws-datatable-fn mws-table">
 							<thead>
 								<tr>
-									<th></th>
-									<th>特征名称</th>
-									<th>描述</th>
+									<th>全选/反选</th>
+									<th>任务描述</th>
+									<th>扫描IP</th>
+									<th>任务添加时间</th>
+									<th>任务状态</th>
 								</tr>
 							</thead>
-							<tbody>
-								<c:forEach items="${maliciousCodeList}" var="maliciousCode">
+							<tbody id="mtbody">
+								<c:forEach items="${taskManagementList}" var="taskManagement">
 									<tr>
-										<td><input type="checkbox" name='codeSelect' value="${maliciousCode.codeId }" /></td>
-										<td>${maliciousCode.codeName }</td>
-										<td>${maliciousCode.codeDescribe }</td>
+										<td><input type="checkbox" name='taskSelect' value="${taskManagement.taskId }" /></td>
+										<td><a href="taskDetails?taskId=${taskManagement.taskId }">${taskManagement.tmdescribe }</a></td>
+										<!-- 跳转至漏洞详情 taskDetails -->
+										<td>${taskManagement.devIP }</td>
+										<td>${taskManagement.addTime }</td>
+
+										<c:if test="${taskManagement.tmstatus == 0}">
+											<td><a href="taskStart?taskId=${taskManagement.taskId }"><img src='images/heupicture/task-start.png' height='20' width='20' /></a></td>
+										</c:if>
+										<c:if test="${taskManagement.tmstatus == 1}">
+											<td><img src="images/heupicture/task-running.png" height="20" width="20" /></td>
+										</c:if>
+										<c:if test="${taskManagement.tmstatus == 2}">
+											<td><img src='images/heupicture/task-complete.png' height="20" width="20" /></td>
+										</c:if>
 									</tr>
 								</c:forEach>
 							</tbody>
@@ -259,13 +336,13 @@
 	<!-- End Container Wrapper -->
 </body>
 <script type="text/javascript">
-    function openDialog(){
-        document.getElementById('light').style.display='block';
-        document.getElementById('fade').style.display='block'
-    }
-    function closeDialog(){
-        document.getElementById('light').style.display='none';
-        document.getElementById('fade').style.display='none'
-    }
+	function openDialog() {
+		document.getElementById('light').style.display = 'block';
+		document.getElementById('fade').style.display = 'block'
+	}
+	function closeDialog() {
+		document.getElementById('light').style.display = 'none';
+		document.getElementById('fade').style.display = 'none'
+	}
 </script>
 </html>

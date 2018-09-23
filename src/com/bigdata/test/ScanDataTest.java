@@ -1,5 +1,8 @@
 package com.bigdata.test;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.junit.Before;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,11 +12,19 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
 import com.bigdata.beans.ScanData;
 import com.bigdata.beans.TaskManagement;
 import com.bigdata.service.ScanDataService;
+import com.bigdata.service.TaskManagementService;
+import com.bigdata.tools.JsonNode;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 
 public class ScanDataTest {
 	
 	@Autowired
 	private ScanDataService scanDataService;
+	
+	@Autowired
+	private TaskManagementService taskManagementService;
+	
 	private ApplicationContext applicationContext;
 	
 	@Before
@@ -21,6 +32,7 @@ public class ScanDataTest {
 		applicationContext = new ClassPathXmlApplicationContext("classpath:applicationContext.xml");
 		
 		scanDataService = (ScanDataService) applicationContext.getBean("scanDataService");
+		taskManagementService = (TaskManagementService) applicationContext.getBean("taskManagementService");
 	}
 
 	@Test
@@ -43,6 +55,29 @@ public class ScanDataTest {
 		scanData.setTaskManagement(taskManagement);
 		
 		System.out.println(scanDataService.insertScanData(scanData));
+	}
+	
+	@Test
+	public void mtest() {
+		Gson gson = new Gson();
+		ScanData scanData = new ScanData();
+		scanData.setTaskId(1);
+		List<ScanData> scanDataList = new ArrayList<>();
+		List<JsonNode> jsonList = new ArrayList<>();
+		JsonNode jsonNode = null;
+		
+		// 获取 scantype1内容
+		scanData.setScanType(1);
+		scanDataList = scanDataService.getScanDataByEntityForList(scanData);
+			
+		for(int i=0; i<scanDataList.size(); i++) {
+			jsonNode = gson.fromJson(scanDataList.get(i).getVulnerInfo(), JsonNode.class);
+//			System.out.println("jsonNode: " + jsonNode);
+			jsonList.add(jsonNode);
+		}
+		
+		System.out.println("jsonList: " + jsonList.size());
+
 	}
 	
 }

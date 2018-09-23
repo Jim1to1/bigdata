@@ -31,4 +31,13 @@ public class MaliciousCodeService {
 		maliciousCodeMapper.deleteMaliciousCodeById(codeId);
 	}
 
+	/**
+	 * 通过 maliciousCode 向数据库表<MaliciousCode>中添加信息
+	 * @param maliciousCode
+	 * @return
+	 */
+	public Integer addMaliciousCodeByEntity(MaliciousCode maliciousCode) {
+		return maliciousCodeMapper.addMaliciousCode(maliciousCode);
+	}
+
 }

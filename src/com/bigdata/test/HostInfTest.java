@@ -47,7 +47,6 @@ public class HostInfTest {
 		hostInf.setDevType("PCINFO");
 		hostInf.setMsg("{'param7': '空', 'param6': '空', 'param5': '236.424 GB', 'param4': '7.85 GB', 'param3': 8, 'param2': 'AMD64', 'param1': 'Windows 10', 'param9': '无', 'param8': '无'}");
 		
-		System.out.println(hostInfService.addHostInf(hostInf));
 	}
 	
 	@Test

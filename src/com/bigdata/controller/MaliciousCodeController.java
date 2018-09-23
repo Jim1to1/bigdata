@@ -44,15 +44,41 @@ public class MaliciousCodeController {
 		}
 		
 		// 测试传回数据
-		for(int i=0; i<codeIds.length; i++) {
-			System.out.println(codeIds[i]);
-		}
-		
-		// 删除数据
 //		for(int i=0; i<codeIds.length; i++) {
-//			maliciousCodeService.deleteMaliciousCodeById(codeIds[i]);
+//			System.out.println(codeIds[i]);
 //		}
 		
+		System.out.println("***" + codeIds.length);
+		
+		// 删除数据
+		for(int i=0; i<codeIds.length; i++) {
+			maliciousCodeService.deleteMaliciousCodeById(codeIds[i]);
+		}
+		
+		map.clear();
+		List<MaliciousCode> maliciousCodeList = maliciousCodeService.getAllaliciousCode();
+		map.put("maliciousCodeList", maliciousCodeList);
+		
+		return "maliciousCodePage";
+	}
+	
+	@RequestMapping("/addMeliciousCode")
+	public String addMailciousCode(HttpSession session, Map<String, Object> map,
+			@RequestParam(value="codeName", required=false) String codeName,
+			@RequestParam(value="codeDescribe", required=false) String codeDescribe) {
+		
+		User user = (User) session.getAttribute("user");
+		if(user == null) {
+			return "redirect:/login.jsp";
+		}
+		
+		// 添加 maliciousCode
+		MaliciousCode maliciousCode = new MaliciousCode();
+		maliciousCode.setCodeName(codeName);
+		maliciousCode.setCodeDescribe(codeDescribe);
+		maliciousCodeService.addMaliciousCodeByEntity(maliciousCode);
+		
+		map.clear();
 		List<MaliciousCode> maliciousCodeList = maliciousCodeService.getAllaliciousCode();
 		map.put("maliciousCodeList", maliciousCodeList);
 		

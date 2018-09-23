@@ -135,7 +135,7 @@
                         <tbody>
 	                        <c:forEach items="${pc13List}" var="pc13" varStatus="status">
 								<tr>
-									<td>$status.count</td>
+									<td>${status.count }</td>
 									<td>${pc13.param1 }</td>
 									<td>${pc13.param2 }</td>
 								</tr>

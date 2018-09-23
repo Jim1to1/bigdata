@@ -50,6 +50,7 @@ public class TaskManagementService {
 	public List<TaskManagement> getTaskManagementByEntityForLike(TaskManagement taskManagement) {
 		return taskManagementMapper.getTaskManagementByEntityForLike(taskManagement);
 	}
+	
 
 	/**
 	 * 根据 taskManagement 属性更新 TaskManagement 数据表中信息
@@ -68,4 +69,20 @@ public class TaskManagementService {
 		return taskManagementMapper.getTaskManagementMsgByEntity(taskManagement);
 	}
 	
+	/**
+	 * 向数据库表<TaskManagemtn>中添加信息
+	 * @param taskManagement
+	 * @return
+	 */
+	public Integer addTaskManagement(TaskManagement taskManagement) {
+		return taskManagementMapper.addTaskManagement(taskManagement);
+	}
+	
+	public void deleteTaskManagement(Integer taskId) {
+		taskManagementMapper.deleteTaskManagementById(taskId);
+	}
+
+	public List<TaskManagement> getAllTaskManagementNoJoin() {
+		return taskManagementMapper.getAllTaskManagementNoJoin();
+	}
 }

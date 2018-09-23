@@ -192,7 +192,7 @@
 							<tbody>
 								<c:forEach items="${userList}" var="user">
 									<tr>
-										<td><input type="checkbox" name="userSelect" value="${user.userId }" />选中/反选</td>
+										<td><input type="checkbox" name="userSelect" value="${user.userId }" /></td>
 										<td>${user.userName }</td>
 										<c:if test="${user.role == 1 }">
 											<td>管理员</td>

@@ -57,4 +57,11 @@ public interface ScanDataMapper {
 	 */
 	public void updateScanDataByEntity(ScanData scanData);
 	
+	/**
+	 * 通过 scanData 对象信息精准查询 <ScanData> 表中信息
+	 * @param scanData
+	 * @return
+	 */
+	public List<ScanData> getScanDataByEntityForList(ScanData scanData);
+	
 }

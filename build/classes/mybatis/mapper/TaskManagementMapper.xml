@@ -31,11 +31,17 @@
 	</sql>
 	
 	<!-- 通过 taskId 获取 TaskManagement 对象信息: public TaskManagement getTaskManagementMapperById(Integer taskId); -->
-	<select id="getTaskManagementMapperById" resultMap="taskManagementMapper">
+	<!-- <select id="getTaskManagementMapperById" resultMap="taskManagementMapper">
 		select * from TaskManagement taskManagement, ScanData scanData
 		<where>
 			taskManagement.taskId = scanData.taskId
 			and taskManagement.taskId = #{taskManagement.taskId}
+		</where>
+	</select> -->
+	<select id="getTaskManagementMapperById" resultMap="taskManagementMapper">
+		select * from TaskManagement taskManagement
+		<where>
+			taskId = #{taskId}
 		</where>
 	</select>
 	
@@ -81,6 +87,11 @@
 	<!-- 获取所有 TaskManagementMapper 对象信息: public List<TaskManagement> getAllTaskManagement(); -->
 	<select id="getAllTaskManagement" resultMap="taskManagementMapper">
 		select * from TaskManagement tm, ScanData sd
+	</select>
+	
+	<!-- 获取所有 taskManagement 信息, 不进行连接查询: public List<TaskManagement> getAllTaskManagementNoJoin(); -->
+	<select id="getAllTaskManagementNoJoin" resultType="com.bigdata.beans.TaskManagement">
+		select * from TaskManagement
 	</select>
 	
 	<!-- 通过 TaskManagementMapper 属性模糊查询 <TaskManagementMapper> 表中信息: public List<TaskManagement> getTaskManagementByEntityForLike(TaskManagement taskManagement); -->

@@ -16,7 +16,7 @@ public class TaskManagement implements Serializable{
 	private static final long serialVersionUID = 1L;
 	private Integer taskId;		// 任务 id 号
 	private String devIP;		// 扫描任务中，前端输入的IP
-	private Integer tmstatus;		// 任务状态, 1:未开始	2:正在执行	  3:扫描任务完成
+	private Integer tmstatus;	// 任务状态, 0:未开始	1:正在执行	  2:扫描任务完成
 	private String tmdescribe;	// 扫描任务描述
 	private String addTime;		// 任务创建时间
 	

@@ -9,7 +9,7 @@ $(document).ready(function() {
 	$("#uploader").pluploadQueue({
 		// General settings
 		runtimes : 'html4, html5', 
-		url : '../upload.html',
+		url : 'fileUpload',
 		max_file_size : '1000mb',
 		max_file_count: 20, // user can add no more then 20 files at a time
 		chunk_size : '1mb',
@@ -35,7 +35,7 @@ $(document).ready(function() {
     $("#uploader2").pluploadQueue({
         // General settings
         runtimes : 'html4, html5',
-        url : '../upload.html',
+        url : 'fileUpload',
         max_file_size : '1000mb',
         max_file_count: 20, // user can add no more then 20 files at a time
         chunk_size : '1mb',
@@ -61,7 +61,7 @@ $(document).ready(function() {
     $("#uploader3").pluploadQueue({
         // General settings
         runtimes : 'html4, html5',
-        url : '../upload.html',
+        url : 'fileUpload',
         max_file_size : '1000mb',
         max_file_count: 20, // user can add no more then 20 files at a time
         chunk_size : '1mb',

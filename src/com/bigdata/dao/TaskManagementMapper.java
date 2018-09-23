@@ -64,4 +64,10 @@ public interface TaskManagementMapper {
 	 */
 	public List<TaskManagement> getTaskManagementMsgByEntity(TaskManagement taskManagement);
 	
+	/**
+	 * 获取所有 taskManagement 信息, 不进行连接查询
+	 * @return
+	 */
+	public List<TaskManagement> getAllTaskManagementNoJoin();
+	
 }

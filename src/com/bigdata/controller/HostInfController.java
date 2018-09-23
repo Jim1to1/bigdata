@@ -37,6 +37,7 @@ public class HostInfController {
 	public String getHostInfMsg(HttpServletRequest request) {
 		
 		String jsonStr = request.getParameter("jsonStr");
+		
 		Gson gson = new Gson();
 		JsonNode jsonNode = gson.fromJson(jsonStr, JsonNode.class);
 		
@@ -73,7 +74,7 @@ public class HostInfController {
 				// 将主机信息 PC1 转发至前台
 				map.put("hostInf", jsonList.get(jsonList.size() - 1));
 				
-				System.out.println("complete PC1...");
+				//System.out.println("complete PC1...");
 			}
 			
 			
@@ -88,7 +89,7 @@ public class HostInfController {
 				// 将主机信息 PC2 转发至前台
 				map.put("pc2List", jsonList);
 				
-				System.out.println("complete PC2...");
+				//System.out.println("complete PC2...");
 			}
 			
 			
@@ -102,7 +103,6 @@ public class HostInfController {
 				// 将主机信息 PC3 转发至前台
 				map.put("pc3List", jsonList);
 				
-				System.out.println("complete PC3...");
 			}
 			
 			return "hostInfPage";

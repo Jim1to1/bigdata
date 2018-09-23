@@ -73,16 +73,16 @@
             <li>
                 <a href="#" class="mws-i-24 i-computer-imac">系统安全</a>
                 <ul>
-                    <li><a href="table3-1.html">漏洞检测</a></li>
+                    <li><a href="redrictTaskManagementPage">漏洞检测</a></li>
                     <li><a href="getSecurityLogPage">日志追踪</a></li>
-                    <li><a href="table3-3.html">漏洞详情</a></li>
+                    <!-- <li><a href="table3-3.html">漏洞详情</a></li> -->
                 </ul>
             </li>
             <li>
                 <a href="#" class="mws-i-24 i-text-document">知识库</a>
                 <ul>
-                    <li><a href="table4-1.html">漏洞库</a></li>
-                    <li><a href="table4-2.html">补丁库</a></li>
+                    <li><a href="redirectUploadPage">漏洞库</a></li>
+                    <li><a href="redirectUploadFilePage">补丁库</a></li>
                 </ul>
             </li>
             <li>
@@ -90,7 +90,7 @@
                 <ul>
                     <li><a href="redirectUserManagement">用户管理</a></li>
                     <li><a href="redirectPasswordManagement">密码管理</a></li>
-                    <li><a href="table5-3.html">系统日志</a></li>
+                    <!-- <li><a href="table5-3.html">系统日志</a></li> -->
                 </ul>
             </li>
         </ul>
