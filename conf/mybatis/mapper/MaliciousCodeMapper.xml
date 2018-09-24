@@ -36,6 +36,24 @@
 		</where>
 	</select>
 	
+	<!-- 通过 MaliciousCode 对象信息精准查询数据库表中信息: public MaliciousCode getMaliciousCodeByEntity(MaliciousCode maliciousCode); -->
+	<select id="getMaliciousCodeByEntity" resultType="com.bigdata.beans.MaliciousCode">
+		select * from MaliciousCode
+		<where>
+			1 = 1
+			<if test="codeId != null">
+				and codeId = #{codeId}
+			</if>
+			<if test="codeName != null">
+				and codeName = #{codeName}
+			</if>
+			<if test="codeDescribe != null">
+				and codeDescribe = #{codeDescribe}
+			</if>
+			limit 1
+		</where>
+	</select>
+	
 	<!-- 获取所有数据库表 <MaliciousCode> 所有信息: public List<MaliciousCode> getAllMaliciousCode(); -->
 	<select id="getAllMaliciousCode" resultType="com.bigdata.beans.MaliciousCode">
 		select * from MaliciousCode

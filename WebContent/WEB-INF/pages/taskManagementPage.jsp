@@ -105,9 +105,16 @@
 <script type="text/javascript">
 	var ids = new Array();
 	var status = false;
+	
+	$(document).bind("keydown", function(e) {//文档绑定键盘按下事件
+	    e = window.event || e;//解决浏览器兼容的问题   
+	    if(e.keyCode == 116) {//F5按下
+	    	return false;
+	    }
+	});
 
 	//每隔一段时间执行一次的函数
-	function getTaskStatus() {
+	/* function getTaskStatus() {
 		//var tbody = window.document.getElementById("tbody-result");
 
 		$.ajax({
@@ -118,6 +125,9 @@
 				var tbody = $("#mtbody");
 				
 				var str = "";
+				str += "<table class='mws-datatable-fn mws-table'>";
+				str += "<thead><tr><th>全选/反选</th><th>任务描述</th><th>扫描IP</th><th>任务添加时间</th><th>任务状态</th></tr></thead>";
+				str += "<tbody id='mtbody'>";
 	    	   	for(var i=0; i<data.length; i++) {
 	    	   		
 	    	   		// 奇数行
@@ -147,6 +157,8 @@
 		    	   	
 		    	   	str += "<tr>";
 	    	   	}
+		    	str += "</tbody>"
+		    	str += "</table>"
 	    	   	$("#mtbody").html(str);
 	    	   	//tbody.innerHTML = str;
 			}
@@ -154,49 +166,39 @@
 
 	};
 	//主动调用
-	setInterval("getTaskStatus()", 5000);
+	setInterval("getTaskStatus()", 5000); */
 
 	window.onload = function() {
+		$("#allAndNotAll").click(function() {
+			if (this.checked) {
+				$("input[name='taskSelect']:checkbox").each(function() {
+					$(this).prop("checked", true);
+
+					ids.push($(this).attr("value"));
+				});
+			} else {
+				$("input[name='taskSelect']:checkbox").each(function() {
+					$(this).prop("checked", false);
+				});
+			}
+			//var delIds=ids.join(",");   
+			//console.log(delIds);
+			// console.log(ids);
+		});
+		
 		$("input[name='taskSelect']:checkbox").click(function() {
 			ids.push($(this).attr("value"));
+			$("#allAndNotAll").prop("checked", false);
 		});
-	};
-
-	function getTaskDetails(taskId) {
-		//alert("taskId: " + taskId);
-		$.ajax({
-			url : "taskDetails",
-			type : "post",
-			data : {
-				"taskId" : taskId
-			},
-			traditional : true, //这里设置为true
-			success : function(data) {
-				//do sth...
-				window.location.reload();
-			}
-		});
-
 	};
 
 	function deleteTask() {
-		if (ids.length == 0) {
-			alert("请选择删除内容项");
-		} else {
-			// alert(ids);
-			//向后台交互
-			$.ajax({
-				url : "deleteTaskManagementById",
-				type : "post",
-				data : {
-					"ids" : ids
-				},
-				traditional : true, //这里设置为true
-				success : function(data) {
-					//do sth...
-					window.location.reload();
-				}
-			});
+		if(ids.length == 0) {
+        	alert("请选择项目");
+        	return false;
+       	}
+		else {
+			document.getElementById('mform').submit();
 		}
 	};
 </script>
@@ -282,49 +284,51 @@
 						<span class="mws-i-24 i-table-1">漏洞任务列表</span>
 					</div>
 					<div class="mws-panel-body">
-						<div class="mws-panel-toolbar top clearfix">
-							<ul>
-								<li><a href="JavaScript:void(0)" onclick="openDialog()"
-									class="mws-ic-16 ic-add">添加</a></li>
-								<li><a onclick="deleteTask()" class="mws-ic-16 ic-cross">删除选中项</a></li>
-								<!-- <li><a href="#" class="mws-ic-16 ic-printer">打印</a></li> -->
-								<!-- <li><a href="#" class="mws-ic-16 ic-arrow-refresh">刷新</a></li> -->
-								<!-- <li><a onclick="aClick()" class="mws-ic-16 ic-edit">修改更新</a></li> -->
-							</ul>
-						</div>
-
-						<table class="mws-datatable-fn mws-table">
-							<thead>
-								<tr>
-									<th>全选/反选</th>
-									<th>任务描述</th>
-									<th>扫描IP</th>
-									<th>任务添加时间</th>
-									<th>任务状态</th>
-								</tr>
-							</thead>
-							<tbody id="mtbody">
-								<c:forEach items="${taskManagementList}" var="taskManagement">
+						<form action="deleteTaskManagementById" method="post" id="mform">
+							<div class="mws-panel-toolbar top clearfix">
+								<ul>
+									<li><a href="JavaScript:void(0)" onclick="openDialog()"
+										class="mws-ic-16 ic-add">添加</a></li>
+									<li><a onclick="deleteTask()" class="mws-ic-16 ic-cross">删除选中项</a></li>
+									<!-- <li><a href="#" class="mws-ic-16 ic-printer">打印</a></li> -->
+									<!-- <li><a href="#" class="mws-ic-16 ic-arrow-refresh">刷新</a></li> -->
+									<!-- <li><a onclick="aClick()" class="mws-ic-16 ic-edit">修改更新</a></li> -->
+								</ul>
+							</div>
+	
+							<table class="mws-datatable-fn mws-table">
+								<thead>
 									<tr>
-										<td><input type="checkbox" name='taskSelect' value="${taskManagement.taskId }" /></td>
-										<td><a href="taskDetails?taskId=${taskManagement.taskId }">${taskManagement.tmdescribe }</a></td>
-										<!-- 跳转至漏洞详情 taskDetails -->
-										<td>${taskManagement.devIP }</td>
-										<td>${taskManagement.addTime }</td>
-
-										<c:if test="${taskManagement.tmstatus == 0}">
-											<td><a href="taskStart?taskId=${taskManagement.taskId }"><img src='images/heupicture/task-start.png' height='20' width='20' /></a></td>
-										</c:if>
-										<c:if test="${taskManagement.tmstatus == 1}">
-											<td><img src="images/heupicture/task-running.png" height="20" width="20" /></td>
-										</c:if>
-										<c:if test="${taskManagement.tmstatus == 2}">
-											<td><img src='images/heupicture/task-complete.png' height="20" width="20" /></td>
-										</c:if>
+										<th>全选/反选</th>
+										<th>任务描述</th>
+										<th>扫描IP</th>
+										<th>任务添加时间</th>
+										<th>任务状态</th>
 									</tr>
-								</c:forEach>
-							</tbody>
-						</table>
+								</thead>
+								<tbody id="mtbody">
+									<c:forEach items="${taskManagementList}" var="taskManagement">
+										<tr>
+											<td><input type="checkbox" name='taskSelect' value="${taskManagement.taskId }" /></td>
+											<td><a href="taskDetails?taskId=${taskManagement.taskId }">${taskManagement.tmdescribe }</a></td>
+											<!-- 跳转至漏洞详情 taskDetails -->
+											<td>${taskManagement.devIP }</td>
+											<td>${taskManagement.addTime }</td>
+	
+											<c:if test="${taskManagement.tmstatus == 0}">
+												<td><a href="taskStart?taskId=${taskManagement.taskId }"><img src='images/heupicture/task-start.png' height='20' width='20' /></a></td>
+											</c:if>
+											<c:if test="${taskManagement.tmstatus == 1}">
+												<td><img src="images/heupicture/task-running.png" height="20" width="20" /></td>
+											</c:if>
+											<c:if test="${taskManagement.tmstatus == 2}">
+												<td><img src='images/heupicture/task-complete.png' height="20" width="20" /></td>
+											</c:if>
+										</tr>
+									</c:forEach>
+								</tbody>
+							</table>
+						</form>
 					</div>
 				</div>
 

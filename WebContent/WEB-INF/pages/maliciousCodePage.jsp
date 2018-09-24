@@ -104,46 +104,73 @@
 <%-- <script type="text/javascript" src="<%=path%>/scripts/jquery-1.10.2.js"></script> --%>
 <script type="text/javascript">
 	var ids = new Array();
-	var status = false;
 	
 	window.onload = function () {
+		$("#allAndNotAll").click(function() {
+			if (this.checked) {
+				$("input[name='codeSelect']:checkbox").each(function() {
+					$(this).prop("checked", true);
+
+					ids.push($(this).attr("value"));
+				});
+			} else {
+				$("input[name='codeSelect']:checkbox").each(function() {
+					$(this).prop("checked", false);
+				});
+			}
+			//var delIds=ids.join(",");   
+			//console.log(delIds);
+			// console.log(ids);
+		});
+		
 		$("input[name='codeSelect']:checkbox").click(function() {
 			ids.push($(this).attr("value"));
+			$("#allAndNotAll").prop("checked", false);
 		});
 	};
 	
-	/* $(function () {
-		alert(11);
-		$("input[name='codeSelect']:checkbox").click(function() {
-			ids.push($(this).attr("value"));
-		});
-	}); */
+	$(document).bind("keydown", function(e) {//文档绑定键盘按下事件
+	    e = window.event || e;//解决浏览器兼容的问题   
+	    if(e.keyCode == 116) {//F5按下
+	    	return false;
+	    }
+	});
+	
+	$("#submitCode").submit(function(e) {
+		/* var userName = $("#userName").val();	// 用户名
+		var passWord = $("#passWord").val();	// 密码
+		var nickName = $("#nickName").val();	// 昵称
+		
+    	if(userName.length == 0) {
+        	e.preventDefault();
+        	alert("请填写用户名");
+    	} else if(passWord.length == 0) {
+    		e.preventDefault();
+    		alert("请填写密码");
+    	} else if(nickName.length == 0) {
+    		e.preventDefault();
+    		alert("请填写昵称");
+    	} else if(userNameExist == true || nickNameExist == true) {
+    		e.preventDefault();
+    		if(userNameExist == true) {
+    			$("#message").html("<font color='red'>用户名已存在</font>");
+    		}
+    		if(nickNameExist == true) {
+    			$("#message").html("<font color='red'>昵称已存在</font>");
+    		}
+    	} else {
+    		alert("提交成功!");
+    	} */
+    });
 	
 	function deleteCode() {
-		/* deleteMaliciousCode */
-
-		// console.log(ids);
-
-		if (ids.length == 0) {
-			alert("请选择删除内容项");
-		} else {
-			// alert(ids);
-			//向后台交互
-			/* $.ajax({
-				url : "deleteMaliciousCode",
-				type : "post",
-				data : {
-					"ids" : ids
-				},
-				traditional : true, //这里设置为true
-				success : function(data) {
-					//do sth...
-					windows.location.href = "redirectMaliciousCodePage";
-				}
-			}); */
-			window.location.href = "deleteMaliciousCode?ids=" + ids;
+		if(ids.length == 0) {
+        	alert("请选择项目");
+        	return false;
+       	}
+		else {
+			document.getElementById('mform').submit();
 		}
-
 	};
 </script>
 
@@ -185,7 +212,7 @@
 	
 	<!-- 测试部分 -->
 	<div id="light" class="white_content">
-		<form class="mws-form" action="addMeliciousCode" method="post">
+		<form id="submitCode" class="mws-form" action="addMeliciousCode" method="post">
             <div class="mws-form-row">
             	<div class="mws-form-item large">
                 	<input type="text" name="codeName" class="mws-login-username mws-textinput" placeholder="特征名称" />
@@ -220,34 +247,36 @@
 						<span class="mws-i-24 i-table-1">恶意代码库</span>
 					</div>
 					<div class="mws-panel-body">
-						<div class="mws-panel-toolbar top clearfix">
-							<ul>
-								<li><a href = "JavaScript:void(0)" onclick = "openDialog()" class="mws-ic-16 ic-add">添加</a></li>
-								<li><a onclick="deleteCode()" class="mws-ic-16 ic-cross">删除选中项</a></li>
-								<!-- <li><a href="#" class="mws-ic-16 ic-printer">打印</a></li> -->
-								<!-- <li><a href="#" class="mws-ic-16 ic-arrow-refresh">刷新</a></li> -->
-								<!-- <li><a onclick="aClick()" class="mws-ic-16 ic-edit">修改更新</a></li> -->
-							</ul>
-						</div>
-
-						<table class="mws-datatable-fn mws-table">
-							<thead>
-								<tr>
-									<th></th>
-									<th>特征名称</th>
-									<th>描述</th>
-								</tr>
-							</thead>
-							<tbody>
-								<c:forEach items="${maliciousCodeList}" var="maliciousCode">
+						<form action="deleteMaliciousCode" method="post" id="mform">
+							<div class="mws-panel-toolbar top clearfix">
+								<ul>
+									<li><a href = "JavaScript:void(0)" onclick = "openDialog()" class="mws-ic-16 ic-add">添加</a></li>
+									<li><a onclick="deleteCode()" class="mws-ic-16 ic-cross">删除选中项</a></li>
+									<!-- <li><a href="#" class="mws-ic-16 ic-printer">打印</a></li> -->
+									<!-- <li><a href="#" class="mws-ic-16 ic-arrow-refresh">刷新</a></li> -->
+									<!-- <li><a onclick="aClick()" class="mws-ic-16 ic-edit">修改更新</a></li> -->
+								</ul>
+							</div>
+	
+							<table class="mws-datatable-fn mws-table">
+								<thead>
 									<tr>
-										<td><input type="checkbox" name='codeSelect' value="${maliciousCode.codeId }" /></td>
-										<td>${maliciousCode.codeName }</td>
-										<td>${maliciousCode.codeDescribe }</td>
+										<th></th>
+										<th>特征名称</th>
+										<th>描述</th>
 									</tr>
-								</c:forEach>
-							</tbody>
-						</table>
+								</thead>
+								<tbody>
+									<c:forEach items="${maliciousCodeList}" var="maliciousCode">
+										<tr>
+											<td><input type="checkbox" name='codeSelect' value="${maliciousCode.codeId }" /></td>
+											<td>${maliciousCode.codeName }</td>
+											<td>${maliciousCode.codeDescribe }</td>
+										</tr>
+									</c:forEach>
+								</tbody>
+							</table>
+						</form>
 					</div>
 				</div>
 

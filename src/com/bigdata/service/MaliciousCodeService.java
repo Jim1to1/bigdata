@@ -39,5 +39,21 @@ public class MaliciousCodeService {
 	public Integer addMaliciousCodeByEntity(MaliciousCode maliciousCode) {
 		return maliciousCodeMapper.addMaliciousCode(maliciousCode);
 	}
+	
+	/**
+	 * 判断 codeName 是否在数据库中存在
+	 * @param codeName
+	 * @return
+	 */
+	public boolean codeNameIsExiste(String codeName) {
+		MaliciousCode maliciousCode = new MaliciousCode();
+		maliciousCode.setCodeName(codeName);
+		
+		if(maliciousCodeMapper.getMaliciousCodeForListByEntity(maliciousCode) != null) {
+			return true;
+		}
+		
+		return false;
+	}
 
 }

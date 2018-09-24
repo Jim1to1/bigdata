@@ -26,8 +26,8 @@
                 </div>
                 <ul>
                     <li><a href="#">个人信息</a></li>
-                    <li><a href="table5-2.html">修改密码</a></li>
-                    <li><a href="index-2.html">退出</a></li>
+                    <li><a href="redirectPasswordManagement">修改密码</a></li>
+                    <li><a href="userLogout">退出</a></li>
                 </ul>
             </div>
         </div>
@@ -45,7 +45,7 @@
 
     <!-- Main Navigation -->
     <div id="mws-navigation">
-        <ul>
+        <ul>							
             <li class="active"><a href="redirectIndex" class="mws-i-24 i-home">控制台</a></li>
             <li>
                 <a href="#" class="mws-i-24 i-table-1">数据安全核查</a>

@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.bigdata.beans.User;
 import com.bigdata.service.UserService;
+import com.bigdata.tools.Encoder;
 
 @Controller
 public class UserController {
@@ -203,25 +204,50 @@ public class UserController {
 			@RequestParam(value="role", required=false) Integer role) throws IOException {
 		
 		User sessionUser = (User) session.getAttribute("user");
+		
 		if(sessionUser == null) {
 			return "redirect:/login.jsp";
 		}
 		
+		if(username == null || password == null) {
+			return "addUser";
+		}
+		
+		session.setAttribute("tmpUsername", username);
+		session.setAttribute("tmpPassword", password);
+		
 		if(userService.validateIsExist(username)) {
-			// 该用户名已经存在
 			response.setContentType("text/html; charset=UTF-8"); // 转码
 		    PrintWriter out = response.getWriter();
 		    out.flush();
-		    out.println("<script>");
-		    out.println("alert('该用户名已经存在, 添加失败');");
-		    out.println("</script>");
 		    
-		    return "addUser";
+			String tmpUsername = (String) session.getAttribute("tmpUsername");
+			String tmpPassword = (String) session.getAttribute("tmpPassword");
+			if(tmpUsername.equals(username) && tmpPassword.equals(password)) {
+				// 重复提交
+				out.println("<script>");
+			    out.println("alert('请勿重复提交！');");
+			    out.println("</script>");
+			}
+			else {
+				// 该用户名已经存在
+			    out.println("<script>");
+			    out.println("alert('该用户名已经存在, 添加失败');");
+			    out.println("</script>");
+			}
+			// 获取所有用户后返回
+			request.getSession().removeAttribute("tmpUsername");
+			request.getSession().removeAttribute("tmpPassword");
+		    List<User> userList = userService.getAllUser();
+		    map.put("userList", userList);
+			return "userManagement";
 		}
 		
 		User user = new User();
 		user.setUserName(username);
-		user.setPassword(password);
+		
+		String md5Psw = Encoder.EncoderByMd5(password);
+		user.setPassword(md5Psw);
 		user.setRole(role);
 		
 		userService.addUser(user);
@@ -258,6 +284,31 @@ public class UserController {
 		for(int i=0; i<userIds.length; i++) {
 			userService.deleteUserById(userIds[i]);
 		}
+		
+		// 获取所有用户后返回
+	    List<User> userList = userService.getAllUser();
+	    map.put("userList", userList);
+		
+		return "userManagement";
+	}
+	
+	@RequestMapping("/deleteUserByIds")
+	public String deleteUserByIds(HttpSession session, Map<String, Object> map, 
+			@RequestParam(value="userSelect", required=false) Integer[] ids) {
+		System.out.println("deleteUserByIds...");
+		User user = (User) session.getAttribute("user");
+		if(user == null) {
+			return "redirect:/login.jsp";
+		}
+		
+		// 删除数据
+		if(ids.length > 0) {
+			for(int i=0; i<ids.length; i++) {
+				//System.out.println("id: " + ids[i]);
+				userService.deleteUserById(ids[i]);
+			}
+		}
+		//System.out.println(ids);
 		
 		// 获取所有用户后返回
 	    List<User> userList = userService.getAllUser();

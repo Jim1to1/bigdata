@@ -71,12 +71,14 @@ public class ScanDataTest {
 		scanDataList = scanDataService.getScanDataByEntityForList(scanData);
 			
 		for(int i=0; i<scanDataList.size(); i++) {
+			//System.out.println(scanDataList.get(i).getVulnerInfo());
 			jsonNode = gson.fromJson(scanDataList.get(i).getVulnerInfo(), JsonNode.class);
-//			System.out.println("jsonNode: " + jsonNode);
-			jsonList.add(jsonNode);
+			System.out.println(jsonNode);
+////			System.out.println("jsonNode: " + jsonNode);
+//			jsonList.add(jsonNode);
 		}
-		
-		System.out.println("jsonList: " + jsonList.size());
+//		
+//		System.out.println("jsonList: " + jsonList.size());
 
 	}
 	

@@ -44,4 +44,11 @@ public interface MaliciousCodeMapper {
 	 */
 	public void deleteMaliciousCodeById(Integer codeId);
 	
+	/**
+	 * 通过 MaliciousCode 对象信息精准查询数据库表中信息
+	 * @param maliciousCode
+	 * @return
+	 */
+	public MaliciousCode getMaliciousCodeByEntity(MaliciousCode maliciousCode);
+	
 }

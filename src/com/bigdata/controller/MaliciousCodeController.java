@@ -36,7 +36,7 @@ public class MaliciousCodeController {
 	
 	@RequestMapping("/deleteMaliciousCode")
 	public String deleteMaliciousCode(HttpSession session, Map<String, Object> map, 
-			@RequestParam(value="ids", required=false) Integer[] codeIds) {
+			@RequestParam(value="codeSelect", required=false) Integer[] codeIds) {
 		
 		User user = (User) session.getAttribute("user");
 		if(user == null) {
@@ -48,7 +48,7 @@ public class MaliciousCodeController {
 //			System.out.println(codeIds[i]);
 //		}
 		
-		System.out.println("***" + codeIds.length);
+//		System.out.println("***" + codeIds.length);
 		
 		// 删除数据
 		for(int i=0; i<codeIds.length; i++) {

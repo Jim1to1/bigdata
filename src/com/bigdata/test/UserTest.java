@@ -26,11 +26,12 @@ public class UserTest {
 
 	@Test
 	public void testAddUser() {
-		String password = "333";
+		String password = "admin";
 		String md5Psw = Encoder.EncoderByMd5(password);
 		User user = new User();
-		user.setUserName("user3");
+		user.setUserName("admin");
 		user.setPassword(md5Psw);
+		user.setRole(1);
 		
 		System.out.println(userService.addUser(user));
 	}

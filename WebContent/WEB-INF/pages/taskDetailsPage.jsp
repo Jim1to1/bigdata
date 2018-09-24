@@ -101,6 +101,12 @@
 
 			<!-- Main Container -->
 			<div class="container">
+			
+				<div class="mws-panel grid_1">
+                <div class="mws-panel-header">
+                    <a href='redrictTaskManagementPage'><span class="mws-i-24 i-bended-arrow-left">返回</span></a>
+                </div>
+            </div>
 
 				<!-- 属性信息 -->
 				<div class="mws-panel grid_4">

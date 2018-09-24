@@ -55,6 +55,8 @@
 
 <!-- JavaScript Plugins -->
 
+<script type="text/javascript" src="<%=path%>/js/jquery-1.7.1.min.js"></script>
+
 <script type="text/javascript"
 	src="<%=path%>/plugins/jimgareaselect/jquery.imgareaselect.min.js"></script>
 <script type="text/javascript"
@@ -99,11 +101,11 @@
 <script type="text/javascript" src="<%=path%>/js/themer.js"></script>
 
 <script type="text/javascript" src="<%=path%>/js/demo.dashboard.js"></script>
-<script type="text/javascript" src="<%=path%>/scripts/jquery-1.10.2.js"></script>
 
 <!-- 表单提交验证 -->
 <script type="text/javascript">
-	$(function() {
+	
+	window.onload = function() {
 		$("form").submit(function(e) {
 			var username = $("#username").val();	// 用户名
 			var password = $("#password").val();	// 密码
@@ -127,9 +129,8 @@
 				alert("两次输入密码不一致");
 			}
 		});
-		
-	});
-	
+	};
+
 </script>
 
 <title>工业大数据安全管理平台 - 添加用户</title>

@@ -55,7 +55,7 @@
 
 <!-- JavaScript Plugins -->
 
-<%-- <script type="text/javascript" src="<%=path%>/js/jquery-1.7.1.min.js"></script> --%>
+<script type="text/javascript" src="<%=path%>/js/jquery-1.7.1.min.js"></script>
 
 <script type="text/javascript"
 	src="<%=path%>/plugins/jimgareaselect/jquery.imgareaselect.min.js"></script>
@@ -101,13 +101,31 @@
 <script type="text/javascript" src="<%=path%>/js/themer.js"></script>
 
 <script type="text/javascript" src="<%=path%>/js/demo.dashboard.js"></script>
-<script type="text/javascript" src="<%=path%>/scripts/jquery-1.10.2.js"></script>
+<%-- <script type="text/javascript" src="<%=path%>/scripts/jquery-1.10.2.js"></script> --%>
 
 <script type="text/javascript">
-	$(function() {
-		var ids = new Array();
-		//alert(111);
-		//实现全选与反选  
+	
+	var ids = [];
+	
+	function formSubmit() {
+		if(ids.length == 0) {
+        	alert("请选择项目");
+        	return false;
+       	}
+		else {
+			document.getElementById('mform').submit();
+		}
+	};
+	
+	$(document).bind("keydown", function(e) {//文档绑定键盘按下事件
+	    e = window.event || e;//解决浏览器兼容的问题   
+	    if(e.keyCode == 116) {//F5按下
+	    	return false;
+	    }
+	});
+
+	window.onload = function() {
+		
 		$("#allAndNotAll").click(function() {
 			if (this.checked) {
 				$("input[name='userSelect']:checkbox").each(function() {
@@ -124,34 +142,13 @@
 			//console.log(delIds);
 			// console.log(ids);
 		});
-
+		
 		$("input[name='userSelect']:checkbox").click(function() {
 			ids.push($(this).attr("value"));
 			$("#allAndNotAll").prop("checked", false);
 		});
-
-		// 监听删除事件, 若没有选中删除条目, 提示未选中
-		$("#deleteUser").click(function() {
-
-			if (ids.length == 0) {
-				alert("请选择删除内容项");
-			} else {
-				// alert(ids);
-				//向后台交互
-				$.ajax({
-					url : "deleteUserById",
-					type: "post",
-					data:{"ids": ids},
-					traditional: true, //这里设置为true
-					success : function(data) {
-						//do sth...
-						window.location.reload();
-					}
-				});
-			}
-
-		});
-	});
+		
+	};
 </script>
 
 <title>工业大数据安全管理平台 - 用户管理</title>
@@ -174,36 +171,40 @@
 						<span class="mws-i-24 i-user-2">用户列表</span>
 					</div>
 					<div class="mws-panel-body">
-						<div class="mws-panel-toolbar top clearfix">
-							<ul>
-								<li><a href="redirectAddUserPage" class="mws-ic-16 ic-add">添加</a></li>
-								<li><a class="mws-ic-16 ic-cross" id="deleteUser">删除</a></li>
-								<!-- <li><a href="#" class="mws-ic-16 ic-arrow-refresh">刷新</a></li> -->
-							</ul>
-						</div>
-						<table class="mws-table">
-							<thead>
-								<tr>
-									<th><input type="checkbox" id="allAndNotAll" />全选/反选</th>
-									<th>用户名</th>
-									<th>角色</th>
-								</tr>
-							</thead>
-							<tbody>
-								<c:forEach items="${userList}" var="user">
+						<form action="deleteUserByIds" method="post" id="mform">
+							<div class="mws-panel-toolbar top clearfix">
+								<ul>
+									<li><a href="redirectAddUserPage" class="mws-ic-16 ic-add">添加</a></li>
+									<!-- <li><input type="submit" class="mws-ic-16 ic-cross" value="删除指定用户"></li> -->
+									<!-- <li><a class="mws-ic-16 ic-cross" id="deleteUser">删除</a></li> -->
+									<li><a onclick="formSubmit();" class="mws-ic-16 ic-cross">删除选中项</a></li>
+									<!-- <li><a href="#" class="mws-ic-16 ic-arrow-refresh">刷新</a></li> -->
+								</ul>
+							</div>
+							<table class="mws-table">
+								<thead>
 									<tr>
-										<td><input type="checkbox" name="userSelect" value="${user.userId }" /></td>
-										<td>${user.userName }</td>
-										<c:if test="${user.role == 1 }">
-											<td>管理员</td>
-										</c:if>
-										<c:if test="${user.role == 2 }">
-											<td>操作员</td>
-										</c:if>
+										<th><input type="checkbox" id="allAndNotAll" />全选/反选</th>
+										<th>用户名</th>
+										<th>角色</th>
 									</tr>
-								</c:forEach>
-							</tbody>
-						</table>
+								</thead>
+								<tbody>
+									<c:forEach items="${userList}" var="user">
+										<tr>
+											<td><input type="checkbox" name="userSelect" value="${user.userId }" /></td>
+											<td>${user.userName }</td>
+											<c:if test="${user.role == 1 }">
+												<td>管理员</td>
+											</c:if>
+											<c:if test="${user.role == 2 }">
+												<td>操作员</td>
+											</c:if>
+										</tr>
+									</c:forEach>
+								</tbody>
+							</table>
+						</form>
 					</div>
 				</div>
 

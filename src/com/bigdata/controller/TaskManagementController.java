@@ -88,7 +88,7 @@ public class TaskManagementController {
 
 	@RequestMapping(value = "/deleteTaskManagementById")
 	public String deleteTaskManagementById(HttpSession session, Map<String, Object> map,
-			@RequestParam(value = "ids", required = false) Integer[] taskIds) {
+			@RequestParam(value = "taskSelect", required = false) Integer[] taskIds) {
 
 		User user = (User) session.getAttribute("user");
 		if (user == null) {
