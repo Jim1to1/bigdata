@@ -62,7 +62,7 @@ public class ScanDataController {
 	@RequestMapping("/taskDetails")
 	public String taskDetails(HttpSession session, Map<String, Object> map,
 			@RequestParam(value = "taskId", required = false) Integer taskId) {
-		System.out.println("taskId: " + taskId);
+		// System.out.println("taskId: " + taskId);
 		
 		Gson gson = new Gson();
 		JsonNode jsonNode = null;

@@ -131,7 +131,7 @@ public class TaskManagementController {
 		
 		// 将 taskManagement 指定 taskId 的数据库表信息更新为
 		TaskManagement management = taskManagementService.getTaskManagementMapperById(taskId);
-		System.out.println("management: " + management);
+		// System.out.println("management: " + management);
 		management.setTmstatus(1);
 		taskManagementService.updateTaskManagement(management);
 		

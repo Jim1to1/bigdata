@@ -127,6 +127,23 @@
 			ids.push($(this).attr("value"));
 			$("#allAndNotAll").prop("checked", false);
 		});
+		
+		$("#submitCode").submit(function(e) {
+			var codeName = $("#codeName").val();
+			codeName = $.trim(codeName);
+			//alert(codeName);
+			
+			var ret = /^([a-f0-9A-F]{2}\s*)+/;
+			// var ret = /^\d+$/
+
+			if(ret.test(codeName)) {
+				alert('添加成功');
+		    }
+			else {
+				e.preventDefault();
+				alert("代码名称格式不正确");
+		    }
+	    });
 	};
 	
 	$(document).bind("keydown", function(e) {//文档绑定键盘按下事件
@@ -135,20 +152,6 @@
 	    	return false;
 	    }
 	});
-	
-	$("#submitCode").submit(function(e) {
-		var codeName = $("#codeName").val();
-		codeName = $.trim(codeName);
-		
-		var ret = /^([a-f0-9A-F]{2}\s*)+/;
-		if(ret.test(str)) {
-			alert('添加成功');
-	    }
-		else {
-			e.preventDefault();
-			alert("代码名称格式不正确");
-	    }
-    });
 	
 	function deleteCode() {
 		if(ids.length == 0) {

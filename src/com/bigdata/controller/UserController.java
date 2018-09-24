@@ -213,31 +213,17 @@ public class UserController {
 			return "addUser";
 		}
 		
-		session.setAttribute("tmpUsername", username);
-		session.setAttribute("tmpPassword", password);
-		
 		if(userService.validateIsExist(username)) {
 			response.setContentType("text/html; charset=UTF-8"); // 转码
 		    PrintWriter out = response.getWriter();
 		    out.flush();
 		    
-			String tmpUsername = (String) session.getAttribute("tmpUsername");
-			String tmpPassword = (String) session.getAttribute("tmpPassword");
-			if(tmpUsername.equals(username) && tmpPassword.equals(password)) {
-				// 重复提交
-				out.println("<script>");
-			    out.println("alert('请勿重复提交！');");
-			    out.println("</script>");
-			}
-			else {
-				// 该用户名已经存在
-			    out.println("<script>");
-			    out.println("alert('该用户名已经存在, 添加失败');");
-			    out.println("</script>");
-			}
+			// 该用户名已经存在
+		    out.println("<script>");
+		    out.println("alert('该用户名已经存在, 添加失败');");
+		    out.println("</script>");
+			    
 			// 获取所有用户后返回
-			request.getSession().removeAttribute("tmpUsername");
-			request.getSession().removeAttribute("tmpPassword");
 		    List<User> userList = userService.getAllUser();
 		    map.put("userList", userList);
 			return "userManagement";

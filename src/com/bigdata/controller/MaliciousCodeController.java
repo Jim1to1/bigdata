@@ -73,6 +73,8 @@ public class MaliciousCodeController {
 			@RequestParam(value="codeName", required=false) String codeName,
 			@RequestParam(value="codeDescribe", required=false) String codeDescribe) throws IOException {
 		
+		//System.out.println(codeName + " : " + codeDescribe);
+		
 		User user = (User) session.getAttribute("user");
 		if(user == null) {
 			return "redirect:/login.jsp";
@@ -80,32 +82,20 @@ public class MaliciousCodeController {
 		
 		List<MaliciousCode> maliciousCodeList = new ArrayList<>();
 		
-		session.setAttribute("tmpName", codeName);
-		session.setAttribute("tmpDescribe", codeDescribe);
+		session.setAttribute("tmpCodeName", codeName);
+		session.setAttribute("tmpCodeDescribe", codeDescribe);
 		
 		if(maliciousCodeService.codeNameIsExist(codeName)) {
 			response.setContentType("text/html; charset=UTF-8"); // 转码
 		    PrintWriter out = response.getWriter();
 		    out.flush();
 		    
-		    String tmpName = (String) session.getAttribute("tmpName");
-			String tmpDescribe = (String) session.getAttribute("tmpDescribe");
-		    if(tmpName.equals(codeName) && tmpDescribe.equals(codeDescribe)) {
-				// 重复提交
-				out.println("<script>");
-			    out.println("alert('请勿重复提交！');");
-			    out.println("</script>");
-			}
-			else {
-				// 该用户名已经存在
-			    out.println("<script>");
-			    out.println("alert('该名称已经存在, 添加失败');");
-			    out.println("</script>");
-			}
+			// 该代码名已经存在
+		    out.println("<script>");
+		    out.println("alert('该名称已经存在, 添加失败');");
+		    out.println("</script>");
 		    
 			// 获取所有用户后返回
-			request.getSession().removeAttribute("tmpUsername");
-			request.getSession().removeAttribute("tmpPassword");
 			maliciousCodeList = maliciousCodeService.getAllMaliciousCode();
 			map.put("maliciousCodeList", maliciousCodeList);
 			return "maliciousCodePage";
@@ -117,12 +107,12 @@ public class MaliciousCodeController {
 		maliciousCode.setCodeDescribe(codeDescribe);
 		maliciousCodeService.addMaliciousCodeByEntity(maliciousCode);
 		
-		response.setContentType("text/html; charset=UTF-8"); // 转码
-	    PrintWriter out = response.getWriter();
-	    out.flush();
-	    out.println("<script>");
-	    out.println("alert('添加成功!');");
-	    out.println("</script>");
+//		response.setContentType("text/html; charset=UTF-8"); // 转码
+//	    PrintWriter out = response.getWriter();
+//	    out.flush();
+//	    out.println("<script>");
+//	    out.println("alert('添加成功!');");
+//	    out.println("</script>");
 		
 		map.clear();
 		maliciousCodeList = maliciousCodeService.getAllMaliciousCode();

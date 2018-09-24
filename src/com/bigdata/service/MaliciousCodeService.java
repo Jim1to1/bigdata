@@ -49,7 +49,7 @@ public class MaliciousCodeService {
 		MaliciousCode maliciousCode = new MaliciousCode();
 		maliciousCode.setCodeName(codeName);
 		
-		if(maliciousCodeMapper.getMaliciousCodeForListByEntity(maliciousCode) != null) {
+		if(maliciousCodeMapper.getMaliciousCodeByEntity(maliciousCode) != null) {
 			return true;
 		}
 		
