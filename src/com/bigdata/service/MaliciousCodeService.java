@@ -19,7 +19,7 @@ public class MaliciousCodeService {
 	 * 获取数据库表 <MaliciousCode> 中所有信息
 	 * @return
 	 */
-	public List<MaliciousCode> getAllaliciousCode() {
+	public List<MaliciousCode> getAllMaliciousCode() {
 		return maliciousCodeMapper.getAllMaliciousCode();
 	}
 
@@ -45,7 +45,7 @@ public class MaliciousCodeService {
 	 * @param codeName
 	 * @return
 	 */
-	public boolean codeNameIsExiste(String codeName) {
+	public boolean codeNameIsExist(String codeName) {
 		MaliciousCode maliciousCode = new MaliciousCode();
 		maliciousCode.setCodeName(codeName);
 		

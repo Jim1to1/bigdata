@@ -1,8 +1,13 @@
 package com.bigdata.controller;
 
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,7 +32,7 @@ public class MaliciousCodeController {
 			return "redirect:/login.jsp";
 		}
 		
-		List<MaliciousCode> maliciousCodeList = maliciousCodeService.getAllaliciousCode();
+		List<MaliciousCode> maliciousCodeList = maliciousCodeService.getAllMaliciousCode();
 		map.put("maliciousCodeList", maliciousCodeList);
 			
 		return "maliciousCodePage";
@@ -56,7 +61,7 @@ public class MaliciousCodeController {
 		}
 		
 		map.clear();
-		List<MaliciousCode> maliciousCodeList = maliciousCodeService.getAllaliciousCode();
+		List<MaliciousCode> maliciousCodeList = maliciousCodeService.getAllMaliciousCode();
 		map.put("maliciousCodeList", maliciousCodeList);
 		
 		return "maliciousCodePage";
@@ -64,12 +69,46 @@ public class MaliciousCodeController {
 	
 	@RequestMapping("/addMeliciousCode")
 	public String addMailciousCode(HttpSession session, Map<String, Object> map,
+			HttpServletRequest request, HttpServletResponse response,
 			@RequestParam(value="codeName", required=false) String codeName,
-			@RequestParam(value="codeDescribe", required=false) String codeDescribe) {
+			@RequestParam(value="codeDescribe", required=false) String codeDescribe) throws IOException {
 		
 		User user = (User) session.getAttribute("user");
 		if(user == null) {
 			return "redirect:/login.jsp";
+		}
+		
+		List<MaliciousCode> maliciousCodeList = new ArrayList<>();
+		
+		session.setAttribute("tmpName", codeName);
+		session.setAttribute("tmpDescribe", codeDescribe);
+		
+		if(maliciousCodeService.codeNameIsExist(codeName)) {
+			response.setContentType("text/html; charset=UTF-8"); // 转码
+		    PrintWriter out = response.getWriter();
+		    out.flush();
+		    
+		    String tmpName = (String) session.getAttribute("tmpName");
+			String tmpDescribe = (String) session.getAttribute("tmpDescribe");
+		    if(tmpName.equals(codeName) && tmpDescribe.equals(codeDescribe)) {
+				// 重复提交
+				out.println("<script>");
+			    out.println("alert('请勿重复提交！');");
+			    out.println("</script>");
+			}
+			else {
+				// 该用户名已经存在
+			    out.println("<script>");
+			    out.println("alert('该名称已经存在, 添加失败');");
+			    out.println("</script>");
+			}
+		    
+			// 获取所有用户后返回
+			request.getSession().removeAttribute("tmpUsername");
+			request.getSession().removeAttribute("tmpPassword");
+			maliciousCodeList = maliciousCodeService.getAllMaliciousCode();
+			map.put("maliciousCodeList", maliciousCodeList);
+			return "maliciousCodePage";
 		}
 		
 		// 添加 maliciousCode
@@ -78,8 +117,15 @@ public class MaliciousCodeController {
 		maliciousCode.setCodeDescribe(codeDescribe);
 		maliciousCodeService.addMaliciousCodeByEntity(maliciousCode);
 		
+		response.setContentType("text/html; charset=UTF-8"); // 转码
+	    PrintWriter out = response.getWriter();
+	    out.flush();
+	    out.println("<script>");
+	    out.println("alert('添加成功!');");
+	    out.println("</script>");
+		
 		map.clear();
-		List<MaliciousCode> maliciousCodeList = maliciousCodeService.getAllaliciousCode();
+		maliciousCodeList = maliciousCodeService.getAllMaliciousCode();
 		map.put("maliciousCodeList", maliciousCodeList);
 		
 		return "maliciousCodePage";

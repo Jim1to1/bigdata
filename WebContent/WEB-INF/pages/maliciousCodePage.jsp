@@ -137,30 +137,17 @@
 	});
 	
 	$("#submitCode").submit(function(e) {
-		/* var userName = $("#userName").val();	// 用户名
-		var passWord = $("#passWord").val();	// 密码
-		var nickName = $("#nickName").val();	// 昵称
+		var codeName = $("#codeName").val();
+		codeName = $.trim(codeName);
 		
-    	if(userName.length == 0) {
-        	e.preventDefault();
-        	alert("请填写用户名");
-    	} else if(passWord.length == 0) {
-    		e.preventDefault();
-    		alert("请填写密码");
-    	} else if(nickName.length == 0) {
-    		e.preventDefault();
-    		alert("请填写昵称");
-    	} else if(userNameExist == true || nickNameExist == true) {
-    		e.preventDefault();
-    		if(userNameExist == true) {
-    			$("#message").html("<font color='red'>用户名已存在</font>");
-    		}
-    		if(nickNameExist == true) {
-    			$("#message").html("<font color='red'>昵称已存在</font>");
-    		}
-    	} else {
-    		alert("提交成功!");
-    	} */
+		var ret = /^([a-f0-9A-F]{2}\s*)+/;
+		if(ret.test(str)) {
+			alert('添加成功');
+	    }
+		else {
+			e.preventDefault();
+			alert("代码名称格式不正确");
+	    }
     });
 	
 	function deleteCode() {
@@ -215,7 +202,7 @@
 		<form id="submitCode" class="mws-form" action="addMeliciousCode" method="post">
             <div class="mws-form-row">
             	<div class="mws-form-item large">
-                	<input type="text" name="codeName" class="mws-login-username mws-textinput" placeholder="特征名称" />
+                	<input type="text" id="codeName" name="codeName" class="mws-login-username mws-textinput" placeholder="特征名称" />
                 </div>
             </div>
             <div class="mws-form-row">
